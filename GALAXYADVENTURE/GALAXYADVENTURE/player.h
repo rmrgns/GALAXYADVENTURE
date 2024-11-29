@@ -1,9 +1,11 @@
 #pragma once
 #include "Shape.h"
-static const float shipsize = 0.5f;
+const float shipsize = 0.5f;
 
 class Player : public Shape
 {
+private:
+
 public:
 
 	Player()
@@ -53,23 +55,9 @@ public:
 
 	}
 
-	void Move_by_Time()
-	{
+	void Move_by_Time();
+	void Control(unsigned char key);
+	void Tilt();
+	void DrawPlayer();
 
-	}
-
-	void Control(unsigned char key)
-	{
-
-	}
-
-	void Tilt()
-	{
-
-	}
-
-	void DrawPlayer()
-	{
-		Draw(0, GL_TRIANGLE_STRIP);
-	}
 };
