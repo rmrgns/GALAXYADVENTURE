@@ -1,7 +1,6 @@
 #pragma once
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "common.h"
 
 char* filetobuf(const char* file)
 {

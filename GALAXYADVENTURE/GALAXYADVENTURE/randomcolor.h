@@ -3,8 +3,7 @@
 
 using namespace std;
 
-random_device rd;
-mt19937 gen(rd());
+
 
 void RandomColor(float& colorR, float& colorG, float& colorB)
 {

@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="randomcolor.h">
-      <Filter>utils</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>utils</Filter>
     </ClInclude>
@@ -38,6 +35,15 @@
     </ClInclude>
     <ClInclude Include="Shape.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="star.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJRead.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,21 +65,42 @@
     <ClInclude Include="meteor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\GALAXYADVENTURE\Filetobuf.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\GALAXYADVENTURE\vertex.glsl">
-      <Filter>소스 파일</Filter>
-    </None>
-    <None Include="..\..\..\..\..\GALAXYADVENTURE\fragment.glsl">
-      <Filter>소스 파일</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="meteor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="star.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJRead.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\fragment.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\vertex.glsl">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

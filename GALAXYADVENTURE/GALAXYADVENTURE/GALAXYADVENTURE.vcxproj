@@ -131,20 +131,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\GALAXYADVENTURE\Filetobuf.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="meteor.h" />
+    <ClInclude Include="OBJRead.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="randomcolor.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="star.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\GALAXYADVENTURE\fragment.glsl" />
-    <None Include="..\..\..\..\..\GALAXYADVENTURE\vertex.glsl" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="meteor.cpp" />
+    <ClCompile Include="OBJRead.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="star.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\fragment.glsl" />
+    <None Include="Shader\vertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

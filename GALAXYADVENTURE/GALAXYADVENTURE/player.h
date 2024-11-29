@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Shape.h"
+
 const float shipsize = 0.5f;
 
 class Player : public Shape
