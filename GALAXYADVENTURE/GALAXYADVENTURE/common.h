@@ -10,10 +10,10 @@
 #define WINDOW_HEIGHT 600
 #define FPS 60
 
-// ÄÚµùÄÁº¥¼Ç
-// ÇÔ¼ö/±¸Á¶Ã¼			-> lowerCammel
-// º¯¼ö					-> lower
-// Å¬·¡½º				-> UpperCammel
+// ì½”ë”©ì»¨ë²¤ì…˜
+// í•¨ìˆ˜/êµ¬ì¡°ì²´			-> lowerCammel
+// ë³€ìˆ˜					-> lower
+// í´ë˜ìŠ¤				-> UpperCammel
 // #define				-> UPPER		
 
 
@@ -34,14 +34,14 @@
 
 using namespace std;
 
-// À©µµ¿ì Å©±â
+// ìœˆë„ìš° í¬ê¸°
 struct windowSizeInfo
 {
 	int windowX = 800;
 	int windowY = 800;
 };
 
-// ¹è°æ»ö ¼±ÅÃ
+// ë°°ê²½ìƒ‰ ì„ íƒ
 struct BackgroundColor
 {
 	GLfloat r = 1.0f;

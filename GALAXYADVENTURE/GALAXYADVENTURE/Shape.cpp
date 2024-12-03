@@ -41,13 +41,13 @@ void Shape::DrawCylinder(int i)
 {
 	int baseVertexCount = points / 3;
 
-	// ÇÏ´Ü ¹Ø¸é
+	// ï¿½Ï´ï¿½ ï¿½Ø¸ï¿½
 	glDrawArrays(GL_TRIANGLE_FAN, i * MAX_POINTS, baseVertexCount);
 
-	// »ó´Ü ¹Ø¸é
+	// ï¿½ï¿½ï¿½ ï¿½Ø¸ï¿½
 	glDrawArrays(GL_TRIANGLE_FAN, i * MAX_POINTS + baseVertexCount, baseVertexCount);
 
-	// Ãø¸é
+	// ï¿½ï¿½ï¿½ï¿½
 	glDrawArrays(GL_TRIANGLE_STRIP, i * MAX_POINTS + 2 * baseVertexCount, points - 2 * baseVertexCount);
 
 }

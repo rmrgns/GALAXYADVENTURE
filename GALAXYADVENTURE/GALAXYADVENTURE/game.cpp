@@ -10,14 +10,14 @@ GLvoid Game::drawScene()
 
 	glm::mat4 view = glm::mat4(1.0f);
 	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
-	unsigned int viewLocation = glGetUniformLocation(game.shaderProgramID, "viewTransform"); //ºäÀ× º¯È¯ ¼³Á¤
+	unsigned int viewLocation = glGetUniformLocation(game.shaderProgramID, "viewTransform"); //ë·°ì‰ ë³€í™˜ ì„¤ì •
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
 	glm::mat4 projection = glm::mat4(1.0f);
-	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //Á÷±³ ÅõÇü
-	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f); //¿ø±Ù ÅõÇü
+	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //ì§êµ íˆ¬í˜•
+	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f); //ì›ê·¼ íˆ¬í˜•
 	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -2.0));
-	unsigned int projectionLocation = glGetUniformLocation(game.shaderProgramID, "projectionTransform"); //Åõ¿µ º¯È¯ °ª ¼³Á¤
+	unsigned int projectionLocation = glGetUniformLocation(game.shaderProgramID, "projectionTransform"); //íˆ¬ì˜ ë³€í™˜ ê°’ ì„¤ì •
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 	//glBindVertexArray(axesVAO);
@@ -70,7 +70,7 @@ GLvoid Game::Mouse(int button, int state, int x, int y)
 
 GLvoid Game::Motion(int x, int y)
 {
-    
+
 }
 
 GLvoid Game::timerFunction(int n)
@@ -89,11 +89,11 @@ void Game::convertXY(int x, int y, float& fx, float& fy)
 
 void Game::utilityFunctions()
 {
-    glutKeyboardFunc(Keyboard);			// Å°º¸µå ÀÔ·Â
-    //glutSpecialFunc(SpecialKeyboard);	// Å°º¸µå Æ¯¼ö Å° ÀÔ·Â
-    glutMouseFunc(Mouse);				// ¸¶¿ì½º ÀÔ·Â
-    glutMotionFunc(Motion);				// ¸¶¿ì½º ¿òÁ÷ÀÓ
-    glutTimerFunc(16, timerFunction, 0);	// Å¸ÀÌ¸Ó
+	glutKeyboardFunc(Keyboard);			// í‚¤ë³´ë“œ ì…ë ¥
+	//glutSpecialFunc(SpecialKeyboard);	// í‚¤ë³´ë“œ íŠ¹ìˆ˜ í‚¤ ì…ë ¥
+	glutMouseFunc(Mouse);				// ë§ˆìš°ìŠ¤ ì…ë ¥
+	glutMotionFunc(Motion);				// ë§ˆìš°ìŠ¤ ì›€ì§ì„
+	glutTimerFunc(16, timerFunction, 0);	// íƒ€ì´ë¨¸
 }
 
 void Game::Init()
@@ -110,33 +110,33 @@ void Game::Update()
 
 void Game::InitBuffer()
 {
-	glGenVertexArrays(1, &vao); //--- VAO ¸¦ ÁöÁ¤ÇÏ°í ÇÒ´çÇÏ±â
-	glBindVertexArray(vao); //--- VAO¸¦ ¹ÙÀÎµåÇÏ±â
+	glGenVertexArrays(1, &vao); //--- VAO ë¥¼ ì§€ì •í•˜ê³  í• ë‹¹í•˜ê¸°
+	glBindVertexArray(vao); //--- VAOë¥¼ ë°”ì¸ë“œí•˜ê¸°
 
 
-	glGenBuffers(2, vbo); //--- 2°³ÀÇ VBO¸¦ ÁöÁ¤ÇÏ°í ÇÒ´çÇÏ±â
-	//--- 1¹øÂ° VBO¸¦ È°¼ºÈ­ÇÏ¿© ¹ÙÀÎµåÇÏ°í, ¹öÅØ½º ¼Ó¼º (ÁÂÇ¥°ª)À» ÀúÀå
+	glGenBuffers(2, vbo); //--- 2ê°œì˜ VBOë¥¼ ì§€ì •í•˜ê³  í• ë‹¹í•˜ê¸°
+	//--- 1ë²ˆì§¸ VBOë¥¼ í™œì„±í™”í•˜ì—¬ ë°”ì¸ë“œí•˜ê³ , ë²„í…ìŠ¤ ì†ì„± (ì¢Œí‘œê°’)ì„ ì €ì¥
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 
-	//--- º¯¼ö diamond ¿¡¼­ ¹öÅØ½º µ¥ÀÌÅÍ °ªÀ» ¹öÆÛ¿¡ º¹»çÇÑ´Ù.
+	//--- ë³€ìˆ˜ diamond ì—ì„œ ë²„í…ìŠ¤ ë°ì´í„° ê°’ì„ ë²„í¼ì— ë³µì‚¬í•œë‹¤.
 	glBufferData(GL_ARRAY_BUFFER, index * MAX_POINTS * 3 * sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
 
-	//--- ÁÂÇ¥°ªÀ» attribute ÀÎµ¦½º 0¹ø¿¡ ¸í½ÃÇÑ´Ù: ¹öÅØ½º ´ç 3* float
+	//--- ì¢Œí‘œê°’ì„ attribute ì¸ë±ìŠ¤ 0ë²ˆì— ëª…ì‹œí•œë‹¤: ë²„í…ìŠ¤ ë‹¹ 3* float
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	//--- attribute ÀÎµ¦½º 0¹øÀ» »ç¿ë°¡´ÉÇÏ°Ô ÇÔ
+	//--- attribute ì¸ë±ìŠ¤ 0ë²ˆì„ ì‚¬ìš©ê°€ëŠ¥í•˜ê²Œ í•¨
 	glEnableVertexAttribArray(0);
 
-	//--- 2¹øÂ° VBO¸¦ È°¼ºÈ­ ÇÏ¿© ¹ÙÀÎµå ÇÏ°í, ¹öÅØ½º ¼Ó¼º (»ö»ó)À» ÀúÀå
+	//--- 2ë²ˆì§¸ VBOë¥¼ í™œì„±í™” í•˜ì—¬ ë°”ì¸ë“œ í•˜ê³ , ë²„í…ìŠ¤ ì†ì„± (ìƒ‰ìƒ)ì„ ì €ì¥
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 
-	//--- º¯¼ö colors¿¡¼­ ¹öÅØ½º »ö»óÀ» º¹»çÇÑ´Ù.
+	//--- ë³€ìˆ˜ colorsì—ì„œ ë²„í…ìŠ¤ ìƒ‰ìƒì„ ë³µì‚¬í•œë‹¤.
 	glBufferData(GL_ARRAY_BUFFER, index * MAX_POINTS * 3 * sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
 
-	//--- »ö»ó°ªÀ» attribute ÀÎµ¦½º 1¹ø¿¡ ¸í½ÃÇÑ´Ù: ¹öÅØ½º ´ç 3*float
+	//--- ìƒ‰ìƒê°’ì„ attribute ì¸ë±ìŠ¤ 1ë²ˆì— ëª…ì‹œí•œë‹¤: ë²„í…ìŠ¤ ë‹¹ 3*float
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	//--- attribute ÀÎµ¦½º 1¹øÀ» »ç¿ë °¡´ÉÇÏ°Ô ÇÔ.
+	//--- attribute ì¸ë±ìŠ¤ 1ë²ˆì„ ì‚¬ìš© ê°€ëŠ¥í•˜ê²Œ í•¨.
 	glEnableVertexAttribArray(1);
 
 	drawAxes();
@@ -155,12 +155,12 @@ void Game::UpdateBuffer()
 void Game::drawAxes()
 {
 	glm::vec3 axesVertices[] = {
-		   glm::vec3(-1.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // xÃà ½ÃÀÛÁ¡ (»¡°£»ö)
-		   glm::vec3(1.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // xÃà ³¡Á¡
-		   glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), // yÃà ½ÃÀÛÁ¡ (³ì»ö)
-		   glm::vec3(0.0f,  1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),  // yÃà ³¡Á¡
-		   glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f), // zÃà ½ÃÀÛÁ¡ (ÆÄ¶û)
-		   glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f),  // zÃà ³¡Á¡
+		   glm::vec3(-1.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // xì¶• ì‹œì‘ì  (ë¹¨ê°„ìƒ‰)
+		   glm::vec3(1.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // xì¶• ëì 
+		   glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), // yì¶• ì‹œì‘ì  (ë…¹ìƒ‰)
+		   glm::vec3(0.0f,  1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),  // yì¶• ëì 
+		   glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f), // zì¶• ì‹œì‘ì  (íŒŒë‘)
+		   glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f),  // zì¶• ëì 
 	};
 	glGenVertexArrays(1, &axesVAO);
 	glGenBuffers(1, &axesVBO);
@@ -170,11 +170,11 @@ void Game::drawAxes()
 	glBindBuffer(GL_ARRAY_BUFFER, axesVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(axesVertices), axesVertices, GL_STATIC_DRAW);
 
-	// À§Ä¡ ¼Ó¼º
+	// ìœ„ì¹˜ ì†ì„±
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// »ö»ó ¼Ó¼º
+	// ìƒ‰ìƒ ì†ì„±
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
