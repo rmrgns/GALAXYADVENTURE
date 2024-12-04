@@ -49,8 +49,23 @@ void Player::Control(unsigned char key, Keyboard_type type)
 	}
 }
 
-void Player::Tilt()
+void Player::Tilt(int x, int y)
 {
+	const int tiltstandard = 100;
+
+	if (x > tiltstandard)
+		rotation.z = glm::radians(-45.0f);
+	else if (x < -tiltstandard)
+		rotation.z = glm::radians(45.0f);
+	else
+		rotation.z = glm::radians(0.0f);
+
+	if (y > tiltstandard)
+		rotation.x = glm::radians(45.0f);
+	else if (y < -tiltstandard)
+		rotation.x = glm::radians(-45.0f);
+	else
+		rotation.x = glm::radians(0.0f);
 }
 
 void Player::DrawPlayer()

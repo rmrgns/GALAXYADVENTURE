@@ -20,6 +20,8 @@ private:
 	Player player; // player객체
 	//Star star;
 
+	int prevmouseX, prevmouseY;
+	bool holdmouse;
 public:
 	static GLvoid drawScene();
 	static GLvoid Keyboard(unsigned char key, int x, int y);
@@ -33,7 +35,9 @@ public:
 public:
 	Game()
 	{
-		
+		prevmouseX = 0;
+		prevmouseY = 0;
+		holdmouse = false;
 	}
 	~Game()
 	{

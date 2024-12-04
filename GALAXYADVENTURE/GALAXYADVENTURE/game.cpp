@@ -76,11 +76,27 @@ GLvoid Game::Mouse(int button, int state, int x, int y)
 {
 	float fx = 0.0, fy = 0.0;
 	game.convertXY(x, y, fx, fy);
+
+	//마우스를 누른 상태에서 움직이면 비행기 기울어짐
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		game.holdmouse = true;
+		game.prevmouseX = x;
+		game.prevmouseY = y;
+	}
+	else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+	{
+		game.holdmouse = false;
+		game.player.Tilt(0, 0);
+	}
 }
 
 GLvoid Game::Motion(int x, int y)
 {
-
+	if (game.holdmouse)
+	{
+		game.player.Tilt(x - game.prevmouseX, y - game.prevmouseY);
+	}
 }
 
 GLvoid Game::timerFunction(int n)

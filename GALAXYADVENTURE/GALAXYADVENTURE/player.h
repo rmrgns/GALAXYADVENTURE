@@ -22,6 +22,11 @@ public:
 		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(0, -shipsize, -shipsize);
 
+		//기체 윗면
+		shapecoord[index++] = glm::vec3(-shipsize, shipsize, shipsize);
+		shapecoord[index++] = glm::vec3(shipsize, shipsize, shipsize);
+		shapecoord[index++] = glm::vec3(0, shipsize, -shipsize);
+
 		//기체 뒷면
 		shapecoord[index++] = glm::vec3(-shipsize, -shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
@@ -49,13 +54,13 @@ public:
 		shapecoord[index++] = glm::vec3(0, -shipsize, -shipsize);
 		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
 
+		for (int i = 0; i < 6; ++i)
+			shapecolor[i] = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		//기체 윗면
-		shapecoord[index++] = glm::vec3(-shipsize, shipsize, shipsize);
-		shapecoord[index++] = glm::vec3(shipsize, shipsize, shipsize);
-		shapecoord[index++] = glm::vec3(0, shipsize, -shipsize);
+		for (int i = 6; i < 12; ++i)
+			shapecolor[i] = glm::vec3(0.0f, 1.0f, 1.0f);
 
-		for (int i = 0; i < index; ++i)
+		for (int i = 12; i < index; ++i)
 			shapecolor[i] = glm::vec3(1.0f, 0.0f, 1.0f);
 
 		translation = glm::vec3(0.0);
@@ -73,7 +78,7 @@ public:
 
 	void Move_by_Time();
 	void Control(unsigned char key, Keyboard_type type);
-	void Tilt();
+	void Tilt(int x, int y);
 	void DrawPlayer();
 
 };
