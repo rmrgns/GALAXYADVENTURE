@@ -46,9 +46,9 @@ GLvoid Game::drawScene()
 		0.5f, 1.f, 1.f,//8
 
 	};
-	GLuint VAO, VBO[2], EBO;
-	CreateModel(VAO, VBO, EBO, game.star.getModel(), color, sizeof(color));
-	glBindVertexArray(VAO);
+	//GLuint VAO, VBO[2], EBO;
+	//CreateModel(VAO, VBO, EBO, game.star.getModel(), color, sizeof(color));
+	//glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	glutSwapBuffers();
@@ -99,7 +99,7 @@ void Game::utilityFunctions()
 void Game::Init()
 {
 	player = Player();
-	star = Star();
+	//star = Star();
 	InitBuffer();
 }
 

@@ -21,20 +21,29 @@ public:
 		//기체 뒷면
 		shapecoord[index++] = glm::vec3(-shipsize, -shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
-		shapecoord[index++] = glm::vec3(shipsize, shipsize, -shipsize);
-		shapecoord[index++] = glm::vec3(-shipsize, shipsize, -shipsize);
+		shapecoord[index++] = glm::vec3(shipsize, shipsize, shipsize);
+
+		shapecoord[index++] = glm::vec3(shipsize, shipsize, shipsize);
+		shapecoord[index++] = glm::vec3(-shipsize, shipsize, shipsize);
+		shapecoord[index++] = glm::vec3(-shipsize, -shipsize, shipsize);
 
 		//기체 왼쪽
 		shapecoord[index++] = glm::vec3(-shipsize, -shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(-shipsize, shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(0, shipsize, -shipsize);
+
+		shapecoord[index++] = glm::vec3(0, shipsize, -shipsize);
 		shapecoord[index++] = glm::vec3(0, -shipsize, -shipsize);
+		shapecoord[index++] = glm::vec3(-shipsize, -shipsize, shipsize);
 
 		//기체 오른쪽
 		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(shipsize, shipsize, shipsize);
 		shapecoord[index++] = glm::vec3(0, shipsize, -shipsize);
+
+		shapecoord[index++] = glm::vec3(0, shipsize, -shipsize);
 		shapecoord[index++] = glm::vec3(0, -shipsize, -shipsize);
+		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
 
 
 		//기체 윗면

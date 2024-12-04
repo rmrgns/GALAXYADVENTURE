@@ -14,5 +14,5 @@ void Player::Tilt()
 
 void Player::DrawPlayer()
 {
-	Draw(0, GL_TRIANGLE_STRIP);
+	Draw(0, GL_TRIANGLES);
 }

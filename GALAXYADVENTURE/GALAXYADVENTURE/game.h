@@ -8,7 +8,7 @@ static const int index = 1;
 static float bGCr = 1.0, bGCg = 1.0, bGCb = 1.0; // 배경색
 static GLuint vao, vbo[2], ebo, axesVAO, axesVBO;
 
-static glm::vec3 cameraPos = glm::vec3(0.0f, 0.5f, 5.0f); //카메라 위치
+static glm::vec3 cameraPos = glm::vec3(0.0f, 3.0f, 5.0f); //카메라 위치
 static glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f); //카메라 바라보는 방향
 static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //카메라 위쪽 방향
 
@@ -18,7 +18,7 @@ private:
 	GLuint shaderProgramID = 0; //--- 세이더 프로그램 이름
 
 	Player player; // player객체
-	Star star;
+	//Star star;
 
 public:
 	static GLvoid drawScene();

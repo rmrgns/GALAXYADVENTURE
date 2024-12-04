@@ -12,7 +12,7 @@ private:
 	const char* filename = "cube_sample.obj";
 public:
 	Star() {
-		read_obj_file(filename, &star);
+		//read_obj_file(filename, &star);
 	}
 	~Star() {
 
