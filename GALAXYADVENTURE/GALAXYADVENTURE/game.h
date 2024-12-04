@@ -23,6 +23,7 @@ private:
 public:
 	static GLvoid drawScene();
 	static GLvoid Keyboard(unsigned char key, int x, int y);
+	static GLvoid KeyboardUp(unsigned char key, int x, int y);
 	//static GLvoid SpecialKeyboard(int key, int x, int y);
 	static GLvoid Mouse(int button, int state, int x, int y);
 	static GLvoid Motion(int x, int y);

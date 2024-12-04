@@ -20,7 +20,7 @@ GLvoid Game::drawScene()
 	unsigned int projectionLocation = glGetUniformLocation(game.shaderProgramID, "projectionTransform"); //투영 변환 값 설정
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
-	//glBindVertexArray(axesVAO);
+	glBindVertexArray(axesVAO);
 	glm::mat4 axesTransform = glm::mat4(1.0f);
 	GLuint transformLoc = glGetUniformLocation(game.shaderProgramID, "modelTransform");
 
@@ -33,23 +33,23 @@ GLvoid Game::drawScene()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	game.player.DrawPlayer();
-	GLfloat color[] = {
-	   0.0f, 1.0f, 0.0f,//1
-	   0.0f, 1.0f, 1.f,//2
-	   1.f, 1.0f, 0.f,//3
+	//GLfloat color[] = {
+	//   0.0f, 1.0f, 0.0f,//1
+	//   0.0f, 1.0f, 1.f,//2
+	//   1.f, 1.0f, 0.f,//3
 
-	   1.0f, 0.0f, 1.f,//4
-	   0.0f, 0.f, 1.f,//5
-	   1.f, 0.f, 0.f,//6
+	//   1.0f, 0.0f, 1.f,//4
+	//   0.0f, 0.f, 1.f,//5
+	//   1.f, 0.f, 0.f,//6
 
-	   0.f, 1.0f, 0.5f,//7
-		0.5f, 1.f, 1.f,//8
+	//   0.f, 1.0f, 0.5f,//7
+	//	0.5f, 1.f, 1.f,//8
 
-	};
+	//};
 	//GLuint VAO, VBO[2], EBO;
 	//CreateModel(VAO, VBO, EBO, game.star.getModel(), color, sizeof(color));
 	//glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	glutSwapBuffers();
 }
@@ -59,7 +59,17 @@ GLvoid Game::Keyboard(unsigned char key, int x, int y)
 	if (key == 'q')
 		glutLeaveMainLoop();
 
+	//w, a, s, d로 비행기 조작
+	game.player.Control(key, KEY_DOWN);
+
 	glutPostRedisplay();
+}
+
+GLvoid Game::KeyboardUp(unsigned char key, int x, int y)
+{
+	game.player.Control(key, KEY_UP);
+
+	return GLvoid();
 }
 
 GLvoid Game::Mouse(int button, int state, int x, int y)
@@ -75,6 +85,13 @@ GLvoid Game::Motion(int x, int y)
 
 GLvoid Game::timerFunction(int n)
 {
+	//비행기는 자동으로 -z 방향으로 이동
+	//입력받은 조작이 있으면 해당 방향으로 x, y 이동
+	//비행기 이동에 맞춰서 카메라 위치, 보는 방향 이동
+	game.player.Move_by_Time();
+	cameraPos += game.player.speed;
+	cameraDirection += game.player.speed;
+
 	glutPostRedisplay();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
 }
@@ -90,6 +107,7 @@ void Game::convertXY(int x, int y, float& fx, float& fy)
 void Game::utilityFunctions()
 {
 	glutKeyboardFunc(Keyboard);			// 키보드 입력
+	glutKeyboardUpFunc(KeyboardUp);			// 키보드 입력
 	//glutSpecialFunc(SpecialKeyboard);	// 키보드 특수 키 입력
 	glutMouseFunc(Mouse);				// 마우스 입력
 	glutMotionFunc(Motion);				// 마우스 움직임
@@ -155,12 +173,12 @@ void Game::UpdateBuffer()
 void Game::drawAxes()
 {
 	glm::vec3 axesVertices[] = {
-		   glm::vec3(-1.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // x축 시작점 (빨간색)
-		   glm::vec3(1.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // x축 끝점
-		   glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), // y축 시작점 (녹색)
-		   glm::vec3(0.0f,  1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),  // y축 끝점
-		   glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f), // z축 시작점 (파랑)
-		   glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f),  // z축 끝점
+		   glm::vec3(-1000.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // x축 시작점 (빨간색)
+		   glm::vec3(1000.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // x축 끝점
+		   glm::vec3(0.0f, -1000.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), // y축 시작점 (녹색)
+		   glm::vec3(0.0f,  1000.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),  // y축 끝점
+		   glm::vec3(0.0f, 0.0f, -1000.0f), glm::vec3(0.0f, 0.0f, 1.0f), // z축 시작점 (파랑)
+		   glm::vec3(0.0f, 0.0f, 1000.0f), glm::vec3(0.0f, 0.0f, 1.0f),  // z축 끝점
 	};
 	glGenVertexArrays(1, &axesVAO);
 	glGenBuffers(1, &axesVBO);

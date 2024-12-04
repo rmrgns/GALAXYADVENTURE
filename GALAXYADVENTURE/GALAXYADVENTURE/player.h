@@ -3,12 +3,16 @@
 #include "Shape.h"
 
 const float shipsize = 0.5f;
+const float shipspeed = 0.1f;
+
+enum Keyboard_type { KEY_DOWN, KEY_UP };
 
 class Player : public Shape
 {
 private:
 
 public:
+	glm::vec3 speed;
 
 	Player()
 	{
@@ -59,6 +63,7 @@ public:
 		revolution = glm::vec3(0.0);
 		scaling = glm::vec3(1.0);
 		points = index;
+		speed = glm::vec3(0.0f, 0.0f, -shipspeed);
 	}
 
 	~Player()
@@ -67,7 +72,7 @@ public:
 	}
 
 	void Move_by_Time();
-	void Control(unsigned char key);
+	void Control(unsigned char key, Keyboard_type type);
 	void Tilt();
 	void DrawPlayer();
 
