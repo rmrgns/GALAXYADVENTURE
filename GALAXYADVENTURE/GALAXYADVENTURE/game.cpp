@@ -77,7 +77,6 @@ GLvoid Game::Mouse(int button, int state, int x, int y)
 	float fx = 0.0, fy = 0.0;
 	game.convertXY(x, y, fx, fy);
 
-	//마우스를 누른 상태에서 움직이면 비행기 기울어짐
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
 		game.holdmouse = true;
@@ -101,6 +100,7 @@ GLvoid Game::Motion(int x, int y)
 
 GLvoid Game::timerFunction(int n)
 {
+	//마우스를 누르고 움직이면 해당 방향으로 기체 회전
 	//비행기는 자동으로 -z 방향으로 이동
 	//입력받은 조작이 있으면 해당 방향으로 x, y 이동
 	//비행기 이동에 맞춰서 카메라 위치, 보는 방향 이동
