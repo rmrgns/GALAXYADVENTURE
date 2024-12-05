@@ -13,6 +13,7 @@ private:
 
 public:
 	glm::vec3 speed;
+	glm::vec3 angle;
 
 	Player()
 	{
@@ -69,12 +70,15 @@ public:
 		scaling = glm::vec3(1.0);
 		points = index;
 		speed = glm::vec3(0.0f, 0.0f, -shipspeed);
+		angle = glm::vec3(0.0f);
 	}
 
 	~Player()
 	{
 
 	}
+
+	glm::vec3 GetMoveValue();
 
 	void Move_by_Time();
 	void Control(unsigned char key, Keyboard_type type);

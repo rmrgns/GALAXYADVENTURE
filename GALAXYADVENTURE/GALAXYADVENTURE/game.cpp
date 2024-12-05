@@ -81,6 +81,8 @@ GLvoid Game::Mouse(int button, int state, int x, int y)
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
 		game.holdmouse = true;
+		game.mouseX = x;
+		game.mouseY = y;
 		game.prevmouseX = x;
 		game.prevmouseY = y;
 	}
@@ -93,10 +95,8 @@ GLvoid Game::Mouse(int button, int state, int x, int y)
 
 GLvoid Game::Motion(int x, int y)
 {
-	if (game.holdmouse)
-	{
-		game.player.Tilt(x - game.prevmouseX, y - game.prevmouseY);
-	}
+	game.mouseX = x;
+	game.mouseY = y;
 }
 
 GLvoid Game::timerFunction(int n)
@@ -104,9 +104,13 @@ GLvoid Game::timerFunction(int n)
 	//비행기는 자동으로 -z 방향으로 이동
 	//입력받은 조작이 있으면 해당 방향으로 x, y 이동
 	//비행기 이동에 맞춰서 카메라 위치, 보는 방향 이동
+	if (game.holdmouse)
+	{
+		game.player.Tilt(game.mouseX - game.prevmouseX, game.mouseY - game.prevmouseY);
+	}
 	game.player.Move_by_Time();
-	cameraPos += game.player.speed;
-	cameraDirection += game.player.speed;
+	cameraPos += game.player.GetMoveValue();
+	cameraDirection += game.player.GetMoveValue();
 
 	glutPostRedisplay();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);

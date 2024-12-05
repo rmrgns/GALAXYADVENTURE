@@ -21,6 +21,7 @@ private:
 	//Star star;
 
 	int prevmouseX, prevmouseY;
+	int mouseX, mouseY;
 	bool holdmouse;
 public:
 	static GLvoid drawScene();
@@ -37,6 +38,8 @@ public:
 	{
 		prevmouseX = 0;
 		prevmouseY = 0;
+		mouseX = 0;
+		mouseY = 0;
 		holdmouse = false;
 	}
 	~Game()
