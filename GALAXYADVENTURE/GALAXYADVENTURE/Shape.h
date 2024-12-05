@@ -15,6 +15,7 @@ public:
 	glm::vec3 revolution;
 	glm::vec3 scaling;
 	int points;
+	float radius;
 
 	Shape()
 	{
@@ -32,9 +33,10 @@ public:
 		revolution = glm::vec3(0.0);
 		scaling = glm::vec3(0.0);
 		points = 0;
+		radius = 0;
 	}
 
-	Shape(int state, glm::vec3 coord[])
+	Shape(int state, glm::vec3 coord[], float rad = 0.0f)
 	{
 		if (state > MAX_POINTS)
 			exit(6974);
@@ -52,9 +54,10 @@ public:
 		revolution = glm::vec3(0.0);
 		scaling = glm::vec3(1.0);
 		points = state;
+		radius = rad;
 	}
 
-	Shape(int state, glm::vec3 coord[], glm::vec3 color)
+	Shape(int state, glm::vec3 coord[], glm::vec3 color, float rad = 0.0f)
 	{
 		if (state > MAX_POINTS)
 			exit(6974);
@@ -75,6 +78,7 @@ public:
 		revolution = glm::vec3(0.0);
 		scaling = glm::vec3(1.0);
 		points = state;
+		radius = rad;
 	}
 
 	~Shape() {}

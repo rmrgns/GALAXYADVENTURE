@@ -53,6 +53,8 @@ struct BackgroundColor
 static random_device rd;
 static mt19937 gen(rd());
 
+bool CheckColide_BS(glm::vec3 sphere1, glm::vec3 sphere2, float radius1, float radius2);
+
 void RandomColor(float& colorR, float& colorG, float& colorB);
 
 #endif // CGCOMMON_H

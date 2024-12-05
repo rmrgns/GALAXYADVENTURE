@@ -71,6 +71,7 @@ public:
 		points = index;
 		speed = glm::vec3(0.0f, 0.0f, -shipspeed);
 		angle = glm::vec3(0.0f);
+		radius = shipsize;
 	}
 
 	~Player()
