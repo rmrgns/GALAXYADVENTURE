@@ -109,8 +109,8 @@ GLvoid Game::timerFunction(int n)
 		game.player.Tilt(game.mouseX - game.prevmouseX, game.mouseY - game.prevmouseY);
 	}
 	game.player.Move_by_Time();
-	cameraPos += game.player.GetMoveValue();
-	cameraDirection += game.player.GetMoveValue();
+	cameraPos = game.player.translation + glm::vec3(5.0f * glm::sin(game.player.angle.y), 3.0f, 5.0f * glm::cos(game.player.angle.y));
+	cameraDirection = game.player.translation;
 
 	glutPostRedisplay();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
