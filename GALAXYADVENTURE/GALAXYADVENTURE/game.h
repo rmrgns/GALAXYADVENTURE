@@ -24,7 +24,7 @@ private:
 	GLuint shaderProgramID = 0; //--- 세이더 프로그램 이름
 	GLuint transformLoc = 0;
 	Player player; // player객체
-	vector<Star> star;
+	vector<Star> star;	// star object 관리
 
 private:
 	// camera

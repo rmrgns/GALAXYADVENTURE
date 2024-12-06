@@ -15,10 +15,10 @@ private:
 	glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f);	// color
 	glm::mat4 Matrix = glm::mat4(1.f);				// calculate matrix
 	glm::mat4 Transform = glm::mat4(1.f);			// transform matrix
-
 public:
 	Star() {
 		model.loadFromFile(filename);
+		
 		RandomColor(color);
 		RandomPosition(pos);
 		Transform = glm::translate(Transform, pos);
