@@ -35,6 +35,7 @@ void main(int argc, char** argv)
 	make_shaderProgram(shaderProgramID, vertexShader, fragmentShader);
 	game.setShaderProgramID(shaderProgramID);
 	game.Init();
+
 	glutDisplayFunc(game.drawScene); //--- 출력 콜백 함수
 	glutReshapeFunc(Reshape);
 	game.utilityFunctions();

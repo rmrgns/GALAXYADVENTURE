@@ -19,8 +19,6 @@ GLvoid Game::drawScene()
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
 	glDrawArrays(GL_LINES, 0, 6);
 
-	game.Update();
-
 	glBindVertexArray(vao);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -42,15 +40,16 @@ GLvoid Game::drawScene()
 	/*CreateModel(VAO, VBO, EBO, game.star.front().getModel(), color, sizeof(color));
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);*/
-
+	game.light();
 	glm::mat4 StarMatrix(1.f);
-
+	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
 	for (const auto& s : game.star)
 	{
+		glUniform3fv(glGetUniformLocation(game.getShaderProgramID(), "objectColor"), 1, glm::value_ptr(objectColor));
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(StarMatrix));
 		CreateModel(VAO, VBO, EBO, s.getModel(), color, sizeof(color));
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 240, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, s.getModel().faces.size()*3, GL_UNSIGNED_INT, 0);
 	}
 
 	glutSwapBuffers();
@@ -77,7 +76,7 @@ GLvoid Game::Motion(int x, int y)
 
 GLvoid Game::timerFunction(int n)
 {
-	float fixedDeltaTime = 1.0f / 60.0f; // 60FPS 기준
+	float fixedDeltaTime = 1.0f / FPS; // 60FPS 기준
 	game.Update(fixedDeltaTime);
 	glutPostRedisplay();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
@@ -110,9 +109,10 @@ void Game::Init()
 	}
 	
 	InitBuffer();
+	glutTimerFunc(1000 / FPS, timerFunction, 1);
 }
 
-void Game::Update()
+void Game::Update(float time)
 {
 	UpdateBuffer();
 	for (auto& s : star)
@@ -226,4 +226,11 @@ void Game::projectionSet()
 
 
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+}
+
+void Game::light()
+{
+	glUniform3fv(glGetUniformLocation(shaderProgramID, "lightPos"), 1, glm::value_ptr(lightPos));
+	glUniform3fv(glGetUniformLocation(shaderProgramID, "lightColor"), 1, glm::value_ptr(lightColor));
+	glUniform3fv(glGetUniformLocation(shaderProgramID, "viewPos"), 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 5.0f)));
 }

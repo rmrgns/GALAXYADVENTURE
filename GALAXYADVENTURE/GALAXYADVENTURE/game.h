@@ -14,6 +14,10 @@ static glm::vec3 cameraPos = glm::vec3(0.0f, 0.5f, 5.0f); //카메라 위치
 static glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f); //카메라 바라보는 방향
 static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //카메라 위쪽 방향
 
+// temp light value
+static glm::vec3 lightPos(1.5f, 1.5f, 0.0f);  // 메인 조명 위치
+static glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+
 class Game
 {
 private:
@@ -60,6 +64,7 @@ public:
 
 	void cameraSet();
 	void projectionSet();
+	void light();
 
 	// method
 	//Player getPlayer() { return player; }

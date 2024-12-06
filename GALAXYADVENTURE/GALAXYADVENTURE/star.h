@@ -9,14 +9,21 @@ class Star : public Shape
 {
 private:
 	Model star;
-	const char* filename = "cube_sample.obj";
+	const char* filename = "OBJ/sphere.obj";
+	glm::vec3 pos = glm::vec3(0.f,0.f,0.f);
 public:
 	Star() {
-		read_obj_file(filename, &star);
+		star.loadFromFile(filename);
 	}
 	~Star() {
 
 	}
+
+
+
+	void Update();
+
+	// method
 	Model getModel() const { return star; }
 };
 
