@@ -23,6 +23,7 @@ public:
 		RandomPosition(pos);
 		Transform = glm::translate(Transform, pos);
 		Matrix = Transform;
+
 	}
 	~Star() {
 

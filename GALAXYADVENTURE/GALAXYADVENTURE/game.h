@@ -10,7 +10,7 @@ static const int index = 1;
 static float bGCr = 0.0, bGCg = 0.0, bGCb = 0.0; // 배경색
 static GLuint vao, vbo[2], ebo, axesVAO, axesVBO;
 
-static glm::vec3 cameraPos = glm::vec3(0.0f, 0.5f, 5.0f); //카메라 위치
+static glm::vec3 cameraPos = glm::vec3(0.0f, 3.0f, 5.0f); //카메라 위치
 static glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f); //카메라 바라보는 방향
 static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //카메라 위쪽 방향
 
@@ -37,9 +37,14 @@ private:
 	int projType = 0;
 	glm::mat4 projection = glm::mat4(1.0f);
 
+
+	int prevmouseX, prevmouseY;
+	int mouseX, mouseY;
+	bool holdmouse;
 public:
 	static GLvoid drawScene();
 	static GLvoid Keyboard(unsigned char key, int x, int y);
+	static GLvoid KeyboardUp(unsigned char key, int x, int y);
 	//static GLvoid SpecialKeyboard(int key, int x, int y);
 	static GLvoid Mouse(int button, int state, int x, int y);
 	static GLvoid Motion(int x, int y);
@@ -49,7 +54,11 @@ public:
 public:
 	Game()
 	{
-		
+		prevmouseX = 0;
+		prevmouseY = 0;
+		mouseX = 0;
+		mouseY = 0;
+		holdmouse = false;
 	}
 	~Game()
 	{
