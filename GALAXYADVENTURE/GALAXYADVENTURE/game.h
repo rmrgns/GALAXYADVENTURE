@@ -7,7 +7,7 @@
 
 static const int index = 1;
 
-static float bGCr = 1.0, bGCg = 1.0, bGCb = 1.0; // 배경색
+static float bGCr = 0.0, bGCg = 0.0, bGCb = 0.0; // 배경색
 static GLuint vao, vbo[2], ebo, axesVAO, axesVBO;
 
 static glm::vec3 cameraPos = glm::vec3(0.0f, 0.5f, 5.0f); //카메라 위치

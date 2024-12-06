@@ -18,7 +18,7 @@ void RandomColor(glm::vec3 &color)
 
 void RandomPosition(glm::vec3& pos)
 {
-	uniform_real_distribution<float> random(-100.f, 100.f);
+	uniform_real_distribution<float> random(-10.f, 10.f);
 	pos.x = random(gen);
 	pos.y = random(gen);
 	pos.z = random(gen);
