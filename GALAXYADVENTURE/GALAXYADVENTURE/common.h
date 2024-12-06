@@ -8,7 +8,7 @@
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define FPS 60
+#define FPS 60.0f
 
 // 코딩컨벤션
 // 함수/구조체			-> lowerCammel

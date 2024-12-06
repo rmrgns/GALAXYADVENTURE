@@ -3,6 +3,8 @@
 #include "player.h"
 #include "star.h"
 
+#define STAR_COUNT 100
+
 static const int index = 1;
 
 static float bGCr = 1.0, bGCg = 1.0, bGCb = 1.0; // 배경색
@@ -18,7 +20,18 @@ private:
 	GLuint shaderProgramID = 0; //--- 세이더 프로그램 이름
 
 	Player player; // player객체
-	Star star;
+	vector<Star> star;
+
+private:
+	// camera
+	glm::mat4 view = glm::mat4(1.0f);
+	glm::vec3 camTranslate = glm::vec3(0.f, 0.f, 0.f);
+	glm::vec3 camRotate = glm::vec3(0.f, 0.f, 0.f);
+
+private:
+	//ortho
+	int projType = 0;
+	glm::mat4 projection = glm::mat4(1.0f);
 
 public:
 	static GLvoid drawScene();
@@ -39,11 +52,14 @@ public:
 
 	}
 	void Init();
-	void Update();
+	void Update(float time);
 
 	void InitBuffer();
 	void UpdateBuffer();
 	void drawAxes();
+
+	void cameraSet();
+	void projectionSet();
 
 	// method
 	//Player getPlayer() { return player; }
