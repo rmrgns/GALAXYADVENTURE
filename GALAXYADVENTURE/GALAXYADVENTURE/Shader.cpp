@@ -197,7 +197,7 @@ void CreateIndexBuffer(GLuint& VAO, GLuint VBO[2], GLuint& EBO, GLfloat point[12
 	glEnableVertexAttribArray(1);
 }
 
-void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model, GLfloat color[], size_t sizeColor)
+void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model)
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(2, VBO);

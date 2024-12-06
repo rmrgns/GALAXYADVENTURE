@@ -10,4 +10,4 @@ void CreateTriBuffer(GLuint& VAO, GLuint VBO[2], GLfloat triShape[9], GLfloat co
 void CreateRectBuffer(GLfloat vPositionList[], GLuint& VAO, GLuint& EBO, GLuint VBO[2], GLfloat colors[12]);
 
 void CreateIndexBuffer(GLuint& VAO, GLuint VBO[2], GLuint& EBO, GLfloat point[12], GLfloat colors[12], int shape, unsigned int index[]);
-void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model, GLfloat color[], size_t sizeColor);
+void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model);
