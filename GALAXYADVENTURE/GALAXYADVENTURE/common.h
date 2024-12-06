@@ -55,5 +55,6 @@ static mt19937 gen(rd());
 
 void RandomColor(float& colorR, float& colorG, float& colorB);
 void RandomColor(glm::vec3 &color);
+void RandomPosition(glm::vec3 &pos);
 
 #endif // CGCOMMON_H

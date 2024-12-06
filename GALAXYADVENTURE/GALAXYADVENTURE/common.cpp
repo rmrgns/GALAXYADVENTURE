@@ -15,3 +15,11 @@ void RandomColor(glm::vec3 &color)
 	color.g = random(gen);
 	color.b = random(gen);
 }
+
+void RandomPosition(glm::vec3& pos)
+{
+	uniform_real_distribution<float> random(-100.f, 100.f);
+	pos.x = random(gen);
+	pos.y = random(gen);
+	pos.z = random(gen);
+}

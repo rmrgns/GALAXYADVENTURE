@@ -104,7 +104,6 @@ void Game::Init()
 	{
 		star.emplace_back(Star());
 	}
-	
 	InitBuffer();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
 }

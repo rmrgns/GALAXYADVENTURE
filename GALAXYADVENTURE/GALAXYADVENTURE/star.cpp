@@ -12,4 +12,5 @@ void Star::Draw(GLuint shaderProgramID, GLuint transformLoc) const
 
 void Star::Update()
 {
+	
 }
