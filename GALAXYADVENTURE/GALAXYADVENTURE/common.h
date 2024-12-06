@@ -54,5 +54,6 @@ static random_device rd;
 static mt19937 gen(rd());
 
 void RandomColor(float& colorR, float& colorG, float& colorB);
+void RandomColor(glm::vec3 &color);
 
 #endif // CGCOMMON_H

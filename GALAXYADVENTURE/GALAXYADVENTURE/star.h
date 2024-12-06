@@ -17,6 +17,7 @@ private:
 public:
 	Star() {
 		model.loadFromFile(filename);
+		RandomColor(color);
 	}
 	~Star() {
 

@@ -7,3 +7,11 @@ void RandomColor(float& colorR, float& colorG, float& colorB)
 	colorG = random(gen);
 	colorB = random(gen);
 }
+
+void RandomColor(glm::vec3 &color)
+{
+	uniform_real_distribution<float> random(0, 1);
+	color.r = random(gen);
+	color.g = random(gen);
+	color.b = random(gen);
+}
