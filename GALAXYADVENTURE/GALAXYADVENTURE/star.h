@@ -8,22 +8,25 @@
 class Star : public Shape
 {
 private:
-	Model star;
+	Model model;
 	const char* filename = "OBJ/sphere.obj";
-	glm::vec3 pos = glm::vec3(0.f,0.f,0.f);
+
+	glm::vec3 pos = glm::vec3(0.f,0.f,0.f);			// position
+	glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f);	// color
+	glm::mat4 Matrix = glm::mat4(1.f);
 public:
 	Star() {
-		star.loadFromFile(filename);
+		model.loadFromFile(filename);
 	}
 	~Star() {
 
 	}
 
-
+	void Draw(GLuint shaderProgramID, GLuint transformLoc) const;
 
 	void Update();
 
 	// method
-	Model getModel() const { return star; }
+	Model getModel() const { return model; }
 };
 

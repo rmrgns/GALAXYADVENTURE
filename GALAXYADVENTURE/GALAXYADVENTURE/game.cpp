@@ -14,9 +14,9 @@ GLvoid Game::drawScene()
 	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //직교 투형
 	//glBindVertexArray(axesVAO);
 	glm::mat4 axesTransform = glm::mat4(1.0f);
-	GLuint transformLoc = glGetUniformLocation(game.shaderProgramID, "modelTransform");
+	
 
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
+	glUniformMatrix4fv(game.transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
 	glDrawArrays(GL_LINES, 0, 6);
 
 	glBindVertexArray(vao);
@@ -45,11 +45,7 @@ GLvoid Game::drawScene()
 	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
 	for (const auto& s : game.star)
 	{
-		glUniform3fv(glGetUniformLocation(game.getShaderProgramID(), "objectColor"), 1, glm::value_ptr(objectColor));
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(StarMatrix));
-		CreateModel(VAO, VBO, EBO, s.getModel(), color, sizeof(color));
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, s.getModel().faces.size()*3, GL_UNSIGNED_INT, 0);
+		s.Draw(game.getShaderProgramID(), game.transformLoc);
 	}
 
 	glutSwapBuffers();
@@ -101,6 +97,7 @@ void Game::utilityFunctions()
 
 void Game::Init()
 {
+	transformLoc = glGetUniformLocation(shaderProgramID, "modelTransform");
 	player = Player();
 	//star = Star();
 	for (int i{}; i < STAR_COUNT; i++)
