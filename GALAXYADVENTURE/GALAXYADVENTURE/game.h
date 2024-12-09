@@ -69,7 +69,6 @@ public:
 
 	void InitBuffer();
 	void UpdateBuffer();
-	void drawAxes();
 
 	void cameraSet();
 	void projectionSet();

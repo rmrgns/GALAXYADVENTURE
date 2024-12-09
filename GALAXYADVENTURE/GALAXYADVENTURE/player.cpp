@@ -33,6 +33,12 @@ void Player::Control(unsigned char key, Keyboard_type type)
 			speed.x = shipspeed;
 			rotation.z = glm::radians(-45.0f + angle.y);
 			break;
+		case 'r':
+			speed.z = -shipspeed;
+			break;
+		case 'f':
+			speed.z = 0.0f;
+			break;
 		default:
 			break;
 		}
@@ -65,12 +71,7 @@ void Player::Control(unsigned char key, Keyboard_type type)
 
 void Player::Tilt(int x, int y)
 {
-	const int tiltstandard = 100;
-
-	if (x > tiltstandard)
-		angle.y -= glm::radians(1.0f);
-	else if (x < -tiltstandard)
-		angle.y += glm::radians(1.0f);
+	angle.y -= glm::radians(float(x) / 4.0f);
 
 	rotation.y = angle.y;
 }

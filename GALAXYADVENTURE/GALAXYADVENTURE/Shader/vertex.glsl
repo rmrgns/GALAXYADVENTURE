@@ -1,6 +1,6 @@
 #version 330 core
 layout(location = 0) in vec3 vPos;
-//layout (location = 1) in vec3 in_Color;   //--- attribute·Î ¼³Á¤µÈ À§Ä¡ ¼Ó¼º: ÀÎµ¦½º 1
+//layout (location = 1) in vec3 in_Color;   //--- attributeë¡œ ì„¤ì •ëœ ìœ„ì¹˜ ì†ì„±: ì¸ë±ìŠ¤ 1
 layout(location = 1) in vec3 vNormal;
 
 out vec3 FragPos;
@@ -13,7 +13,7 @@ uniform mat4 projectionTransform;
 void main() {
     gl_Position = projectionTransform * viewTransform * modelTransform * vec4(vPos, 1.0);
     FragPos = vec3(modelTransform * vec4(vPos, 1.0));
-    Normal = mat3(transpose(inverse(modelTransform))) * vNormal; // ¸ğµ¨ Çà·Ä º¯È¯ ¹İ¿µ
+    Normal = mat3(transpose(inverse(modelTransform))) * vNormal; // ëª¨ë¸ í–‰ë ¬ ë³€í™˜ ë°˜ì˜
 
     //out_Color = in_Color;
 }
