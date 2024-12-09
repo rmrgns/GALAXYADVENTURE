@@ -13,7 +13,7 @@ public:
     };
 
     struct Face {
-        unsigned int v1, v2, v3; // Á¤Á¡ ÀÎµ¦½º
+        unsigned int v1, v2, v3; // ì •ì  ì¸ë±ìŠ¤
     };
 
     std::vector<Model::Vertex> vertices;
@@ -36,7 +36,7 @@ public:
             if (prefix == "v") {
                 glm::vec3 position;
                 if (iss >> position.x >> position.y >> position.z) {
-                    vertices.push_back({ position, glm::vec3(0.0f) }); // ÃÊ±â ³ë¸Ö ¼³Á¤
+                    vertices.push_back({ position, glm::vec3(0.0f) }); // ì´ˆê¸° ë…¸ë©€ ì„¤ì •
                     //std::cout << "Vertex loaded: " << position.x << ", " << position.y << ", " << position.z << std::endl;
                 }
                 else {
@@ -59,14 +59,14 @@ public:
                 while (iss >> vertex) {
                     size_t pos1 = vertex.find("//");
                     if (pos1 != std::string::npos) {
-                        // v1//n1 Çü½Ä
+                        // v1//n1 í˜•ì‹
                         unsigned int vIndex = std::stoi(vertex.substr(0, pos1)) - 1;
                         unsigned int nIndex = std::stoi(vertex.substr(pos1 + 2)) - 1;
                         vIndices.push_back(vIndex);
                         nIndices.push_back(nIndex);
                     }
                     else {
-                        // v1 Çü½Ä
+                        // v1 í˜•ì‹
                         unsigned int vIndex = std::stoi(vertex) - 1;
                         vIndices.push_back(vIndex);
                     }
@@ -86,19 +86,19 @@ public:
 
         file.close();
 
-        // µğ¹ö±ë Ãâ·Â
+        // ë””ë²„ê¹… ì¶œë ¥
         //std::cout << "Vertices loaded: " << vertices.size() << std::endl;
         //std::cout << "Faces loaded: " << faces.size() << std::endl;
     }
 
 
     void calculateNormals(std::vector<Model::Vertex>& vertices, const std::vector<Model::Face>& faces) {
-        // ¸ğµç Á¤Á¡ÀÇ ¹ı¼±À» ÃÊ±âÈ­
+        // ëª¨ë“  ì •ì ì˜ ë²•ì„ ì„ ì´ˆê¸°í™”
         for (auto& vertex : vertices) {
             vertex.normal = glm::vec3(0.0f);
         }
 
-        // °¢ »ï°¢ÇüÀÇ ¹ı¼±À» °è»êÇÏ°í Á¤Á¡¿¡ Ãß°¡
+        // ê° ì‚¼ê°í˜•ì˜ ë²•ì„ ì„ ê³„ì‚°í•˜ê³  ì •ì ì— ì¶”ê°€
         for (const auto& face : faces) {
             glm::vec3 v0 = vertices[face.v1].position;
             glm::vec3 v1 = vertices[face.v2].position;
@@ -110,7 +110,7 @@ public:
             vertices[face.v3].normal += normal;
         }
 
-        // ¸ğµç ¹ı¼±À» Á¤±ÔÈ­
+        // ëª¨ë“  ë²•ì„ ì„ ì •ê·œí™”
         for (auto& vertex : vertices) {
             vertex.normal = glm::normalize(vertex.normal);
         }
