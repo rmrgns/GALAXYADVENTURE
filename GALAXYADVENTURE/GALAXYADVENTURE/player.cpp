@@ -76,22 +76,18 @@ void Player::Tilt(int x, int y)
 	rotation.y = angle.y;
 }
 
-void Player::DrawPlayer()
+void Player::DrawPlayer(GLuint shaderProgramID, GLuint transformLoc)
 {
-	extern Game game;
-	GLuint transformLoc = glGetUniformLocation(game.getShaderProgramID(), "modelTransform");
-
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, revolution.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::rotate(model, revolution.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, revolution.z, glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::translate(model, translation);
-	model = glm::rotate(model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::scale(model, scaling);
-
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
-	glDrawArrays(GL_TRIANGLES, 0, points);
+	glUniform3fv(glGetUniformLocation(shaderProgramID, "objectColor"), 1, glm::value_ptr(shapecolor[0]));
+	glm::mat4 matrix = glm::mat4(1.0f);
+	matrix = glm::translate(matrix, translation);
+	matrix = glm::rotate(matrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	matrix = glm::rotate(matrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	matrix = glm::scale(matrix, scaling);
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrix));
+	CreateModel(vao, vbo, ebo, model);
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, model.faces.size() * 3, GL_UNSIGNED_INT, 0);
 }
 

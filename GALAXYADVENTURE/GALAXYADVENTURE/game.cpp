@@ -14,16 +14,9 @@ GLvoid Game::drawScene()
 	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //���� ����
 	//glBindVertexArray(axesVAO);
 
-	glm::mat4 axesTransform = glm::mat4(1.0f);
-	
-
-	glUniformMatrix4fv(game.transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
-	glDrawArrays(GL_LINES, 0, 6);
-
-	glBindVertexArray(vao);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	game.player.DrawPlayer();
+	game.player.DrawPlayer(game.getShaderProgramID(), game.transformLoc);
 	//GLfloat color[] = {
 	//   0.0f, 1.0f, 0.0f,//1
 	//   0.0f, 1.0f, 1.f,//2

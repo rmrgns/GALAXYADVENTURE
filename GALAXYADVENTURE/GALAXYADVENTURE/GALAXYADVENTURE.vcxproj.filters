@@ -50,9 +50,6 @@
     <ClInclude Include="player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="randomcolor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
