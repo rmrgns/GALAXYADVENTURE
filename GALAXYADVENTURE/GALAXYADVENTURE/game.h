@@ -2,6 +2,8 @@
 #include "common.h"
 #include "player.h"
 #include "star.h"
+#include "meteor.h"
+
 
 #define STAR_COUNT 100
 
@@ -25,6 +27,7 @@ private:
 	GLuint transformLoc = 0;
 	Player player; // player객체
 	vector<Star> star;	// star object 관리
+	vector<Meteor> meteor; // meteor object
 
 private:
 	// camera
