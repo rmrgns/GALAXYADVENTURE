@@ -2,7 +2,7 @@
 
 in vec3 FragPos;      // Vertex Shader에서 전달받은 월드 좌표
 in vec3 Normal;       // Vertex Shader에서 전달받은 노멀
-in vec2 TexCoord;
+in vec2 TexCoord;     // Vertex Shader에서 전달받은 텍스처 좌표
 
 out vec4 FragColor;   // 최종 출력 색상
 
@@ -11,7 +11,11 @@ uniform vec3 lightColor;   // 빛의 색상
 uniform vec3 objectColor;  // 물체의 색상
 uniform vec3 viewPos;      // 카메라의 위치
 uniform float emissionPower = 1.0f; // 방출 강도
-uniform sampler2D texture1;
+
+uniform int textureSelector; // 사용할 텍스처 선택 (1: texture1, 2: texture2)
+uniform sampler2D texture1; // 첫 번째 텍스처
+uniform sampler2D texture2; // 두 번째 텍스처
+
 
 void main() {
     // Ambient (주변광)
@@ -33,8 +37,17 @@ void main() {
 
     // Emission (방출광)
     vec3 emission = lightColor * emissionPower;
-    vec3 textureColor = texture(texture1, TexCoord).rgb;
-    
+
+    // 텍스처 선택 로직
+    vec3 textureColor;
+    if (textureSelector == 1) {
+        textureColor = texture(texture1, TexCoord).rgb; // 첫 번째 텍스처
+    } else if (textureSelector == 2) {
+        textureColor = texture(texture2, TexCoord).rgb; // 두 번째 텍스처
+    } else {
+        textureColor = vec3(1.0, 1.0, 1.0); // 기본 흰색 (선택되지 않았을 때)
+    }
+
     // 최종 조명 계산
     vec3 result = (ambient + diffuse + specular + emission) * textureColor;
     FragColor = vec4(result, 1.0);

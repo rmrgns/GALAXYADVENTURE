@@ -22,16 +22,12 @@ GLvoid Game::drawScene()
 	//glDrawArrays(GL_LINES, 0, 6);
 
 	game.player.DrawPlayer();
-	for (const auto& m : game.meteor)
-	{
-		m.Draw(game.shaderProgramID, game.transformLoc);
-	}
+	
 	glBindVertexArray(0);
 	// Star Rendering
 	glm::mat4 StarMatrix(1.f);
 	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
 
-	
 
 	glUseProgram(game.getShaderProgramStar());
 	game.cameraSet(game.shaderProgramStar);
@@ -39,13 +35,25 @@ GLvoid Game::drawScene()
 	game.light(game.shaderProgramStar);
 
 	// 텍스처 활성화 및 바인딩
-	
+	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "textureSelector"), 1); // texture1 사용
+	glActiveTexture(GL_TEXTURE0); // 텍스처 유닛 0 활성화
+	glBindTexture(GL_TEXTURE_2D, game.startexture);
+	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture1"), 0); // 유닛 0 연결
 	for (auto& s : game.star)
 	{
+		
 		s.Draw(game.shaderProgramStar, game.transformStarLoc);
 	}
 
-	
+	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "textureSelector"), 2); // texture1 사용
+	glActiveTexture(GL_TEXTURE1); // 텍스처 유닛 1 활성화
+	glBindTexture(GL_TEXTURE_2D, game.meteortexture);
+	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture2"), 1); // 유닛 1 연결
+	for (const auto& m : game.meteor)
+	{
+		
+		m.Draw(game.shaderProgramStar, game.transformStarLoc);
+	}
 	
 	glutSwapBuffers();
 }
@@ -141,6 +149,7 @@ void Game::Init()
 	//star = Star();
 
 	startexture = loadTexture("OBJ/sun.jpg");
+	meteortexture = loadTexture("OBJ/Rock6.jpg");
 	//startexture = loadTexture("OBJ/Stone.jpg");
 
 	for (int i{}; i < STAR_COUNT; i++)
@@ -153,9 +162,9 @@ void Game::Init()
 		meteor.emplace_back(Meteor());
 	}
 	
-	glActiveTexture(GL_TEXTURE0); // 텍스처 유닛 0 활성화
-	glBindTexture(GL_TEXTURE_2D, game.startexture);
-	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture1"), 0); // 유닛 0 연결
+	
+
+	
 
 	InitBuffer();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
