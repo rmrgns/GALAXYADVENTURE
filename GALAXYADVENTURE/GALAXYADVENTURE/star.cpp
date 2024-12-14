@@ -5,7 +5,11 @@
 void Star::Draw(GLuint transformLoc)
 {
 	glUniform1f(glGetUniformLocation(shaderProgramID, "emissionPower"), emissionPower);
-	glUniform3fv(glGetUniformLocation(shaderProgramID, "objectColor"), 1, glm::value_ptr(color));
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureID); // 저장된 텍스처 활성화
+	glUniform1i(glGetUniformLocation(shaderProgramID, "texture1"), 0);
+	//glUniform3fv(glGetUniformLocation(shaderProgramID, "objectColor"), 1, glm::value_ptr(color));
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(Matrix));
 
 	//GLuint lightColorLoc = glGetUniformLocation(shaderProgramID, "lightColor");
@@ -23,5 +27,5 @@ void Star::Draw(GLuint transformLoc)
 void Star::Update(float time)
 {
 	lightCycle += time;
-	emissionPower = 0.75f + 0.25f * sin(lightCycle); // 0.5 ~ 1.0 사이로 변동
+	emissionPower = 1.25f + 0.25f * sin(lightCycle); // 1.0 ~ 1.5 사이로 변동
 }

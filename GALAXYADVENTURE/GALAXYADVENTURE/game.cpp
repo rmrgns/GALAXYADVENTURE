@@ -34,21 +34,15 @@ GLvoid Game::drawScene()
 	game.projectionSet(game.shaderProgramStar);
 	game.light(game.shaderProgramStar);
 
-	// 텍스처 활성화 및 바인딩
-	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "textureSelector"), 1); // texture1 사용
-	glActiveTexture(GL_TEXTURE0); // 텍스처 유닛 0 활성화
-	glBindTexture(GL_TEXTURE_2D, game.startexture);
-	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture1"), 0); // 유닛 0 연결
+
 	for (auto& s : game.star)
 	{
-		
-		s.Draw(game.shaderProgramStar, game.transformStarLoc);
+		s.Draw(game.transformStarLoc);
 	}
 
-	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "textureSelector"), 2); // texture1 사용
-	glActiveTexture(GL_TEXTURE1); // 텍스처 유닛 1 활성화
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, game.meteortexture);
-	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture2"), 1); // 유닛 1 연결
+	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture1"), 0);
 	for (const auto& m : game.meteor)
 	{
 		
@@ -146,25 +140,24 @@ void Game::Init()
 	transformLoc = glGetUniformLocation(shaderProgramID, "modelTransform");
 	transformStarLoc = glGetUniformLocation(shaderProgramStar, "modelTransform");
 	player = Player();
-	//star = Star();
 
-	startexture = loadTexture("OBJ/sun.jpg");
+	startexture[0] = loadTexture("OBJ/sun.jpg");
+	startexture[1] = loadTexture("OBJ/Neptune.png");
+	startexture[2] = loadTexture("OBJ/Mars.png");
+	startexture[3] = loadTexture("OBJ/Uranus.png");
 	meteortexture = loadTexture("OBJ/Rock6.jpg");
 	//startexture = loadTexture("OBJ/Stone.jpg");
 
 	for (int i{}; i < STAR_COUNT; i++)
 	{
-		star.emplace_back(Star());
+		int num = RandomTexture();
+		star.emplace_back(Star(shaderProgramStar, startexture[num]));
 	}
 
 	for (int i{}; i < METEOR_COUNT; i++)
 	{
 		meteor.emplace_back(Meteor());
 	}
-	
-	
-
-	
 
 	InitBuffer();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
@@ -292,4 +285,3 @@ void Game::light(GLuint ID)
 	glUniform3fv(glGetUniformLocation(ID, "lightColor"), 1, glm::value_ptr(lightColor));
 	glUniform3fv(glGetUniformLocation(ID, "viewPos"), 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 5.0f)));
 }
-

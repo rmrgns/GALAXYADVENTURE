@@ -23,20 +23,20 @@ private:
 	float lightCycle  = 0;
 
 	// texture
-	int textureNum = 0;
+	GLuint textureID; // 이 Star가 사용할 텍스처 ID
 
 public:
-	Star(GLuint shaderProgram)
-		: shaderProgramID(shaderProgram),         // shaderProgram 초기화
-		textureNum(RandomTexture()),          // RandomTexture 함수로 텍스처 번호 초기화
-		Transform(glm::translate(glm::mat4(1.0f), pos)), // 위치 변환 매트릭스 초기화
-		Scale(glm::scale(glm::mat4(1.0f), size)),        // 크기 변환 매트릭스 초기화
-		Matrix(Transform* Scale)            // 최종 변환 매트릭스 초기화
-	{
+	Star(GLuint shaderProgram, GLuint textureID)
+		: shaderProgramID(shaderProgram), textureID(textureID) {
+		model.loadFromFile(filename);
+
 		RandomColor(color);
 		RandomPosition(pos);
-		model.loadFromFile(filename);           // 모델 로드
+		Transform = glm::translate(Transform, pos);
+		Scale = glm::scale(Scale, size);
+		Matrix = Transform * Scale;
 	}
+
 	~Star() {
 
 	}
@@ -49,7 +49,5 @@ public:
 	Model getModel() const { return model; }
 	void setPos(glm::vec3 pos) { pos = pos; }
 	glm::vec3 getPos() const { return pos; }
-
-	int getTexNum() const { return textureNum; }
 };
 

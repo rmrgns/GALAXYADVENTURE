@@ -7,6 +7,7 @@
 #define STAR_COUNT 100
 #define METEOR_COUNT 60
 
+
 static const int index = 1;
 
 static float bGCr = 0.0, bGCg = 0.0, bGCb = 0.0; // 배경색
@@ -31,7 +32,7 @@ private:
 	GLuint transformStarLoc = 0;
 	Player player; // player객체
 	vector<Star> star;	// star object 관리
-	GLuint startexture;	// star texture
+	GLuint startexture[TEX_COUNT];	// star texture
 	vector<Meteor> meteor; // meteor object
 	GLuint meteortexture;
 

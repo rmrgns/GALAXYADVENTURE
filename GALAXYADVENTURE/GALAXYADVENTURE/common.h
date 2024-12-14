@@ -9,6 +9,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define FPS 60.0f
+#define TEX_COUNT 4
 
 // 코딩컨벤션
 // 함수/구조체			-> lowerCammel
@@ -58,5 +59,6 @@ bool CheckColide_BS(glm::vec3 sphere1, glm::vec3 sphere2, float radius1, float r
 void RandomColor(float& colorR, float& colorG, float& colorB);
 void RandomColor(glm::vec3 &color);
 void RandomPosition(glm::vec3 &pos);
+int RandomTexture();
 
 #endif // CGCOMMON_H

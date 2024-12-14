@@ -37,3 +37,10 @@ void RandomPosition(glm::vec3& pos)
 	pos.z = rangeSelector(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
 
 }
+
+int RandomTexture()
+{
+	uniform_int_distribution<int> random(0, 3);
+	int t = random(gen);
+	return t;
+}
