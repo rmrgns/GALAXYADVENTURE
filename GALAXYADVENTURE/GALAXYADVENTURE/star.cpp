@@ -23,5 +23,5 @@ void Star::Draw(GLuint shaderProgramID, GLuint transformLoc) const
 void Star::Update(float time)
 {
 	lightCycle += time;
-	emissionPower = 0.5f + 0.5f * sin(lightCycle); // 0.0 ~ 1.0 사이로 변동
+	emissionPower = 0.75f + 0.25f * sin(lightCycle); // 0.5 ~ 1.0 사이로 변동
 }
