@@ -22,7 +22,10 @@ GLvoid Game::drawScene()
 	//glDrawArrays(GL_LINES, 0, 6);
 
 	game.player.DrawPlayer();
-	
+	for (const auto& m : game.meteor)
+	{
+		m.Draw(game.shaderProgramID, game.transformLoc);
+	}
 	// Star Rendering
 	glm::mat4 StarMatrix(1.f);
 	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
@@ -36,7 +39,7 @@ GLvoid Game::drawScene()
 	{
 		s.Draw(game.shaderProgramStar, game.transformStarLoc);
 	}
-
+	
 
 	glutSwapBuffers();
 }
@@ -134,6 +137,11 @@ void Game::Init()
 	for (int i{}; i < STAR_COUNT; i++)
 	{
 		star.emplace_back(Star());
+	}
+
+	for (int i{}; i < METEOR_COUNT; i++)
+	{
+		meteor.emplace_back(Meteor());
 	}
 
 	InitBuffer();
@@ -248,7 +256,7 @@ void Game::projectionSet(GLuint ID)
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
 	else
 	{
-		projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
+		projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
 		projection = glm::translate(projection, glm::vec3(0.0, 0.0, -2.0));
 	}
 

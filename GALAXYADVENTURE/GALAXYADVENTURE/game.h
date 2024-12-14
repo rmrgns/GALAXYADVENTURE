@@ -5,7 +5,8 @@
 #include "meteor.h"
 
 
-#define STAR_COUNT 100
+#define STAR_COUNT 30
+#define METEOR_COUNT 60
 
 static const int index = 1;
 
