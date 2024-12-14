@@ -82,7 +82,7 @@ GLvoid make_shaderProgram(GLuint& shaderProgramID, GLuint& vertexShader, GLuint&
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 	//--- Shader Program 사용하기
-	glUseProgram(shaderProgramID);
+	//glUseProgram(shaderProgramID);
 
 }
 

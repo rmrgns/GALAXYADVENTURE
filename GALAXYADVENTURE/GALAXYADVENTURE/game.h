@@ -10,7 +10,9 @@
 static const int index = 1;
 
 static float bGCr = 0.0, bGCg = 0.0, bGCb = 0.0; // 배경색
-static GLuint vao, vbo[2], ebo, axesVAO, axesVBO;
+static GLuint vao, vbo[2], ebo, axesVAO, axesVBO; // 일반 vao
+static GLuint vaoStar, vboStar[2], eboStar; // Star vao
+
 
 static glm::vec3 cameraPos = glm::vec3(0.0f, 3.0f, 5.0f); //카메라 위치
 static glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f); //카메라 바라보는 방향
@@ -24,7 +26,9 @@ class Game
 {
 private:
 	GLuint shaderProgramID = 0; //--- 세이더 프로그램 이름
+	GLuint shaderProgramStar = 0; //--- Star 세이더 프로그램 이름
 	GLuint transformLoc = 0;
+	GLuint transformStarLoc = 0;
 	Player player; // player객체
 	vector<Star> star;	// star object 관리
 	vector<Meteor> meteor; // meteor object
@@ -74,12 +78,16 @@ public:
 	void UpdateBuffer();
 	void drawAxes();
 
-	void cameraSet();
-	void projectionSet();
-	void light();
+	void cameraSet(GLuint ID);
+	void projectionSet(GLuint ID);
+
+	void light(GLuint ID);
 
 	// method
 	//Player getPlayer() { return player; }
 	void setShaderProgramID(GLuint ID) { shaderProgramID = ID; };
 	GLuint getShaderProgramID() const { return shaderProgramID; };
+
+	void setShaderProgramStar(GLuint ID) { shaderProgramStar = ID; };
+	GLuint getShaderProgramStar() const { return shaderProgramStar; };
 };

@@ -4,6 +4,10 @@ GLuint shaderProgramID; //--- 세이더 프로그램 이름
 GLuint vertexShader; //--- 버텍스 세이더 객체
 GLuint fragmentShader; //--- 프래그먼트 세이더 객체
 
+GLuint shaderProgramStar; //--- Star 세이더 프로그램 이름
+GLuint starvertexShader; //--- 버텍스 세이더 객체
+GLuint starfragmentShader; //--- 프래그먼트 세이더 객체
+
 GLvoid Reshape(int w, int h);
 
 void main(int argc, char** argv)
@@ -34,6 +38,15 @@ void main(int argc, char** argv)
 	make_fragmentShaders(fragmentShader, fragmentshadername);
 	make_shaderProgram(shaderProgramID, vertexShader, fragmentShader);
 	game.setShaderProgramID(shaderProgramID);
+
+	// Star shader
+	string starvertexshadername = "Shader/starvertex.glsl";
+	string starfragmentshadername = "Shader/starfragment.glsl";
+	make_vertexShaders(starvertexShader, starvertexshadername);
+	make_fragmentShaders(starfragmentShader, starfragmentshadername);
+	make_shaderProgram(shaderProgramStar, starvertexShader, starfragmentShader);
+	game.setShaderProgramStar(shaderProgramStar);
+	
 	game.Init();
 
 	glutDisplayFunc(game.drawScene); //--- 출력 콜백 함수

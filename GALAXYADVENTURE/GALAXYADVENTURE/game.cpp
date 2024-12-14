@@ -8,44 +8,33 @@ GLvoid Game::drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(game.shaderProgramID);
 
-	game.cameraSet();
-	game.projectionSet();
-
-	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //���� ����
+	game.cameraSet(game.shaderProgramID);
+	game.projectionSet(game.shaderProgramID);
+	game.light(game.shaderProgramID);
+	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //���� ����
 	//glBindVertexArray(axesVAO);
-
-	glm::mat4 axesTransform = glm::mat4(1.0f);
-	
-
-	glUniformMatrix4fv(game.transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
-	glDrawArrays(GL_LINES, 0, 6);
-
 	glBindVertexArray(vao);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	//glm::mat4 axesTransform = glm::mat4(1.0f);
+	//
+	//glUniformMatrix4fv(game.transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
+	//glDrawArrays(GL_LINES, 0, 6);
+
 	game.player.DrawPlayer();
-	//GLfloat color[] = {
-	//   0.0f, 1.0f, 0.0f,//1
-	//   0.0f, 1.0f, 1.f,//2
-	//   1.f, 1.0f, 0.f,//3
-
-	//   1.0f, 0.0f, 1.f,//4
-	//   0.0f, 0.f, 1.f,//5
-	//   1.f, 0.f, 0.f,//6
-
-	//   0.f, 1.0f, 0.5f,//7
-	//	0.5f, 1.f, 1.f,//8
-
-
-	/*CreateModel(VAO, VBO, EBO, game.star.front().getModel(), color, sizeof(color));
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);*/
-	game.light();
+	
+	// Star Rendering
 	glm::mat4 StarMatrix(1.f);
 	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
+
+	glUseProgram(game.getShaderProgramStar());
+	game.cameraSet(game.shaderProgramStar);
+	game.projectionSet(game.shaderProgramStar);
+	game.light(game.shaderProgramStar);
+
 	for (const auto& s : game.star)
 	{
-		s.Draw(game.getShaderProgramID(), game.transformLoc);
+		s.Draw(game.shaderProgramStar, game.transformStarLoc);
 	}
 
 
@@ -99,7 +88,7 @@ GLvoid Game::Motion(int x, int y)
 GLvoid Game::timerFunction(int n)
 {
 
-	float fixedDeltaTime = 1.0f / FPS; // 60FPS ����
+	float fixedDeltaTime = 1.0f / FPS; // 60FPS ����
 	game.Update(fixedDeltaTime);
 	//마우스를 누르고 움직이면 해당 방향으로 기체 회전
 	//비행기는 자동으로 -z 방향으로 이동
@@ -138,6 +127,7 @@ void Game::utilityFunctions()
 void Game::Init()
 {
 	transformLoc = glGetUniformLocation(shaderProgramID, "modelTransform");
+	transformStarLoc = glGetUniformLocation(shaderProgramStar, "modelTransform");
 	player = Player();
 	//star = Star();
 
@@ -155,7 +145,7 @@ void Game::Update(float time)
 	UpdateBuffer();
 	for (auto& s : star)
 	{
-		s.Update();
+		s.Update(time);
 	}
 }
 
@@ -233,7 +223,7 @@ void Game::drawAxes()
 	glBindVertexArray(0);
 }
 
-void Game::cameraSet()
+void Game::cameraSet(GLuint ID)
 {
 	glm::mat4 cameraMatrix(1.0f);
 	glm::mat4 cameraTranslate(1.f);
@@ -243,16 +233,16 @@ void Game::cameraSet()
 	view = glm::lookAt(cameraPos, cameraPos + cameraDirection, cameraUp);
 	cameraTranslate = glm::translate(cameraTranslate, camTranslate);
 	cameraRotate = glm::rotate(cameraRotate, glm::radians(camRotate.y), glm::vec3(0.f, 1.f, 0.f));
-	unsigned int viewLocation = glGetUniformLocation(shaderProgramID, "viewTransform");
+	unsigned int viewLocation = glGetUniformLocation(ID, "viewTransform");
 
 	cameraMatrix = view * cameraRotate;
 
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(cameraMatrix));
 }
 
-void Game::projectionSet()
+void Game::projectionSet(GLuint ID)
 {
-	unsigned int projectionLocation = glGetUniformLocation(shaderProgramID, "projectionTransform");
+	unsigned int projectionLocation = glGetUniformLocation(ID, "projectionTransform");
 	//glm::mat4 projection2 = glm::mat4(1.0f);
 	if (projType == 1)
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
@@ -266,10 +256,10 @@ void Game::projectionSet()
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
-void Game::light()
+void Game::light(GLuint ID)
 {
-	glUniform3fv(glGetUniformLocation(shaderProgramID, "lightPos"), 1, glm::value_ptr(lightPos));
-	glUniform3fv(glGetUniformLocation(shaderProgramID, "lightColor"), 1, glm::value_ptr(lightColor));
-	glUniform3fv(glGetUniformLocation(shaderProgramID, "viewPos"), 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 5.0f)));
+	glUniform3fv(glGetUniformLocation(ID, "lightPos"), 1, glm::value_ptr(lightPos));
+	glUniform3fv(glGetUniformLocation(ID, "lightColor"), 1, glm::value_ptr(lightColor));
+	glUniform3fv(glGetUniformLocation(ID, "viewPos"), 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 5.0f)));
 }
 
