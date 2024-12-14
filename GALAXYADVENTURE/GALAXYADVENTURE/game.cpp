@@ -24,7 +24,7 @@ GLvoid Game::drawScene()
 	game.player.DrawPlayer();
 	for (const auto& m : game.meteor)
 	{
-		//m.Draw(game.shaderProgramID, game.transformLoc);
+		m.Draw(game.shaderProgramID, game.transformLoc);
 	}
 	glBindVertexArray(0);
 	// Star Rendering
