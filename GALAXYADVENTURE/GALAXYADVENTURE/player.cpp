@@ -8,12 +8,21 @@ glm::vec3 Player::GetMoveValue()
 
 void Player::Move_by_Time()
 {
+	if (crash)
+	{
+		if (scaling.x < 2.0f)
+			scaling += glm::vec3(0.02f);
+		else
+			erase = true;
+		return;
+	}
+
 	translation += GetMoveValue();
 }
 
 void Player::Control(unsigned char key, Keyboard_type type)
 {
-	if (type == KEY_DOWN)
+	if (type == KEY_DOWN && !crash)
 	{
 		switch (key)
 		{
@@ -39,11 +48,14 @@ void Player::Control(unsigned char key, Keyboard_type type)
 		case 'f':
 			speed.z = 0.0f;
 			break;
+		case 'x':
+			Explosion();
+			break;
 		default:
 			break;
 		}
 	}
-	else if (type == KEY_UP)
+	else if (type == KEY_UP && !crash)
 	{
 		switch (key)
 		{
@@ -71,13 +83,28 @@ void Player::Control(unsigned char key, Keyboard_type type)
 
 void Player::Tilt(int x, int y)
 {
+	if (crash)
+		return;
+
 	angle.y -= glm::radians(float(x) / 4.0f);
 
 	rotation.y = angle.y;
 }
 
+void Player::Explosion()
+{
+	crash = true;
+	filename = "OBJ/sphere.obj";
+	model.loadFromFile(filename);
+	shapecolor[0] = glm::vec3(1.0f, 0.0f, 0.0f);
+	scaling = glm::vec3(0.2f);
+}
+
 void Player::DrawPlayer(GLuint shaderProgramID, GLuint transformLoc)
 {
+	if (erase)
+		return;
+
 	glUniform3fv(glGetUniformLocation(shaderProgramID, "objectColor"), 1, glm::value_ptr(shapecolor[0]));
 	glm::mat4 matrix = glm::mat4(1.0f);
 	matrix = glm::translate(matrix, translation);

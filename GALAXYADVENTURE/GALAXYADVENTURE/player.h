@@ -16,6 +16,9 @@ public:
 	glm::vec3 speed;
 	glm::vec3 angle;
 
+	bool crash;
+	bool erase;
+
 	Player()
 	{
 		//int index = 0;
@@ -76,6 +79,8 @@ public:
 		speed = glm::vec3(0.0f, 0.0f, -shipspeed);
 		angle = glm::vec3(0.0f);
 		radius = shipsize;
+		crash = false;
+		erase = false;
 	}
 
 	~Player()
@@ -88,6 +93,7 @@ public:
 	void Move_by_Time();
 	void Control(unsigned char key, Keyboard_type type);
 	void Tilt(int x, int y);
+	void Explosion();
 	void DrawPlayer(GLuint shaderProgramID, GLuint transformLoc);
 
 };
