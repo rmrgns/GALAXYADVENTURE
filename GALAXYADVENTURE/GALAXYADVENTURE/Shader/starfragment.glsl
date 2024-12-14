@@ -15,6 +15,9 @@ uniform float emissionPower = 1.0f; // 방출 강도
 uniform int textureSelector; // 사용할 텍스처 선택 (1: texture1, 2: texture2)
 uniform sampler2D texture1; // 첫 번째 텍스처
 uniform sampler2D texture2; // 두 번째 텍스처
+uniform sampler2D texture3; // 3 번째 텍스처
+uniform sampler2D texture4; // 4 번째 텍스처
+uniform sampler2D texture5; // 5 번째 텍스처
 
 
 void main() {
@@ -42,9 +45,20 @@ void main() {
     vec3 textureColor;
     if (textureSelector == 1) {
         textureColor = texture(texture1, TexCoord).rgb; // 첫 번째 텍스처
-    } else if (textureSelector == 2) {
+    } 
+    else if (textureSelector == 2) {
         textureColor = texture(texture2, TexCoord).rgb; // 두 번째 텍스처
-    } else {
+    } 
+    else if (textureSelector == 3) {
+        textureColor = texture(texture3, TexCoord).rgb; // 두 번째 텍스처
+    } 
+    else if (textureSelector == 4) {
+        textureColor = texture(texture4, TexCoord).rgb; // 두 번째 텍스처
+    } 
+    else if (textureSelector == 5) {
+        textureColor = texture(texture5, TexCoord).rgb; // 두 번째 텍스처
+    } 
+    else {
         textureColor = vec3(1.0, 1.0, 1.0); // 기본 흰색 (선택되지 않았을 때)
     }
 
