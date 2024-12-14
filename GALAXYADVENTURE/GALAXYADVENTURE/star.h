@@ -16,8 +16,8 @@ private:
 	glm::mat4 Transform = glm::mat4(1.f);			// transform matrix
 
 	// light
-	GLfloat emissionPower = 1.5f; // power
-
+	GLfloat emissionPower = 0.5f; // power
+	float lightCycle  = 0;
 public:
 	Star() {
 		model.loadFromFile(filename);

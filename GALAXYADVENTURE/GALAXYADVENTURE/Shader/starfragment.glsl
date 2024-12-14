@@ -25,7 +25,7 @@ void main() {
     // Specular (반사광)
     vec3 viewDir = normalize(viewPos - FragPos);       // 카메라 방향
     vec3 reflectDir = reflect(-lightDir, norm);        // 빛의 반사 방향
-    float shininess = 32.0;                            // 광택 강도
+    float shininess = 4.0;                            // 광택 강도
     float specularStrength = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     vec3 specular = specularStrength * lightColor;
 
