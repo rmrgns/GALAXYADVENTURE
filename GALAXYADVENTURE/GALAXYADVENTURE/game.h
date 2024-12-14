@@ -4,13 +4,12 @@
 #include "star.h"
 #include "meteor.h"
 
-
-#define STAR_COUNT 30
+#define STAR_COUNT 100
 #define METEOR_COUNT 60
 
 static const int index = 1;
 
-static float bGCr = 0.0, bGCg = 0.0, bGCb = 0.0; // 배경색
+static float bGCr = 1.0, bGCg = 1.0, bGCb = 1.0; // 배경색
 static GLuint vao, vbo[2], ebo, axesVAO, axesVBO; // 일반 vao
 static GLuint vaoStar, vboStar[2], eboStar; // Star vao
 
@@ -32,6 +31,7 @@ private:
 	GLuint transformStarLoc = 0;
 	Player player; // player객체
 	vector<Star> star;	// star object 관리
+	GLuint startexture;	// star texture
 	vector<Meteor> meteor; // meteor object
 
 private:

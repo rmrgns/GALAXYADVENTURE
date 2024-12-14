@@ -10,15 +10,17 @@ public:
     struct Vertex {
         glm::vec3 position;
         glm::vec3 normal;
+        glm::vec2 texCoord; // í…ìŠ¤ì²˜ ì¢Œí‘œ ì¶”ê°€
     };
 
     struct Face {
-        unsigned int v1, v2, v3; // Á¤Á¡ ÀÎµ¦½º
+        unsigned int v1, v2, v3; // ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
     };
 
     std::vector<Model::Vertex> vertices;
     std::vector<glm::vec3> tempNormals;
     std::vector<Model::Face> faces;
+    std::vector<glm::vec2> tempTexCoords; // ì„ì‹œë¡œ ì €ì¥í•  í…ìŠ¤ì²˜ ì¢Œí‘œ
 
     void loadFromFile(const std::string& filename) {
         std::ifstream file(filename);
@@ -36,69 +38,66 @@ public:
             if (prefix == "v") {
                 glm::vec3 position;
                 if (iss >> position.x >> position.y >> position.z) {
-                    vertices.push_back({ position, glm::vec3(0.0f) }); // ÃÊ±â ³ë¸Ö ¼³Á¤
-                    //std::cout << "Vertex loaded: " << position.x << ", " << position.y << ", " << position.z << std::endl;
-                }
-                else {
-                    std::cerr << "Error parsing vertex: " << line << std::endl;
+                    vertices.push_back({ position, glm::vec3(0.0f) });
                 }
             }
             else if (prefix == "vn") {
                 glm::vec3 normal;
                 if (iss >> normal.x >> normal.y >> normal.z) {
                     tempNormals.push_back(normal);
-                    //std::cout << "Normal loaded: " << normal.x << ", " << normal.y << ", " << normal.z << std::endl;
                 }
-                else {
-                    std::cerr << "Error parsing normal: " << line << std::endl;
+            }
+            else if (prefix == "vt") {
+                glm::vec2 texCoord;
+                if (iss >> texCoord.x >> texCoord.y) {
+                    tempTexCoords.push_back(texCoord);
                 }
             }
             else if (prefix == "f") {
-                std::vector<unsigned int> vIndices, nIndices;
+                std::vector<unsigned int> vIndices, tIndices, nIndices;
                 std::string vertex;
                 while (iss >> vertex) {
-                    size_t pos1 = vertex.find("//");
-                    if (pos1 != std::string::npos) {
-                        // v1//n1 Çü½Ä
+                    size_t pos1 = vertex.find('/');
+                    size_t pos2 = vertex.find_last_of('/');
+
+                    if (pos1 != std::string::npos && pos2 != std::string::npos && pos1 != pos2) {
                         unsigned int vIndex = std::stoi(vertex.substr(0, pos1)) - 1;
-                        unsigned int nIndex = std::stoi(vertex.substr(pos1 + 2)) - 1;
+                        unsigned int tIndex = std::stoi(vertex.substr(pos1 + 1, pos2 - pos1 - 1)) - 1;
+                        unsigned int nIndex = std::stoi(vertex.substr(pos2 + 1)) - 1;
+
                         vIndices.push_back(vIndex);
+                        tIndices.push_back(tIndex);
                         nIndices.push_back(nIndex);
                     }
-                    else {
-                        // v1 Çü½Ä
-                        unsigned int vIndex = std::stoi(vertex) - 1;
-                        vIndices.push_back(vIndex);
-                    }
                 }
-                if (vIndices.size() == 3) {
+                if (vIndices.size() == 3 && tIndices.size() == 3 && nIndices.size() == 3) {
                     faces.push_back({ vIndices[0], vIndices[1], vIndices[2] });
-                    //std::cout << "Face loaded: " << vIndices[0] << ", " << vIndices[1] << ", " << vIndices[2] << std::endl;
-                    vertices[vIndices[0]].normal += tempNormals[nIndices[0]];
-                    vertices[vIndices[1]].normal += tempNormals[nIndices[1]];
-                    vertices[vIndices[2]].normal += tempNormals[nIndices[2]];
-                }
-                else {
-                    std::cerr << "Error parsing face: " << line << std::endl;
+
+                    // ì •ìƒì ì¸ ì¸ë±ìŠ¤ë¼ë©´, í…ìŠ¤ì²˜ ì¢Œí‘œì™€ ë…¸ë©€ì„ ì¶”ê°€
+                    if (vIndices[0] < vertices.size() && tIndices[0] < tempTexCoords.size() && nIndices[0] < tempNormals.size()) {
+                        vertices[vIndices[0]].texCoord = tempTexCoords[tIndices[0]];
+                        vertices[vIndices[1]].texCoord = tempTexCoords[tIndices[1]];
+                        vertices[vIndices[2]].texCoord = tempTexCoords[tIndices[2]];
+                        vertices[vIndices[0]].normal += tempNormals[nIndices[0]];
+                        vertices[vIndices[1]].normal += tempNormals[nIndices[1]];
+                        vertices[vIndices[2]].normal += tempNormals[nIndices[2]];
+                    }
                 }
             }
         }
 
         file.close();
-
-        // µğ¹ö±ë Ãâ·Â
-        //std::cout << "Vertices loaded: " << vertices.size() << std::endl;
-        //std::cout << "Faces loaded: " << faces.size() << std::endl;
     }
 
 
+
     void calculateNormals(std::vector<Model::Vertex>& vertices, const std::vector<Model::Face>& faces) {
-        // ¸ğµç Á¤Á¡ÀÇ ¹ı¼±À» ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         for (auto& vertex : vertices) {
             vertex.normal = glm::vec3(0.0f);
         }
 
-        // °¢ »ï°¢ÇüÀÇ ¹ı¼±À» °è»êÇÏ°í Á¤Á¡¿¡ Ãß°¡
+        // ï¿½ï¿½ ï¿½ï°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         for (const auto& face : faces) {
             glm::vec3 v0 = vertices[face.v1].position;
             glm::vec3 v1 = vertices[face.v2].position;
@@ -110,7 +109,7 @@ public:
             vertices[face.v3].normal += normal;
         }
 
-        // ¸ğµç ¹ı¼±À» Á¤±ÔÈ­
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
         for (auto& vertex : vertices) {
             vertex.normal = glm::normalize(vertex.normal);
         }

@@ -1,5 +1,5 @@
 #include "game.h"
-
+#include "texture.h"
 Game game;
 
 GLvoid Game::drawScene()
@@ -24,23 +24,29 @@ GLvoid Game::drawScene()
 	game.player.DrawPlayer();
 	for (const auto& m : game.meteor)
 	{
-		m.Draw(game.shaderProgramID, game.transformLoc);
+		//m.Draw(game.shaderProgramID, game.transformLoc);
 	}
+	glBindVertexArray(0);
 	// Star Rendering
 	glm::mat4 StarMatrix(1.f);
 	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
+
+	
 
 	glUseProgram(game.getShaderProgramStar());
 	game.cameraSet(game.shaderProgramStar);
 	game.projectionSet(game.shaderProgramStar);
 	game.light(game.shaderProgramStar);
 
-	for (const auto& s : game.star)
+	// 텍스처 활성화 및 바인딩
+	
+	for (auto& s : game.star)
 	{
 		s.Draw(game.shaderProgramStar, game.transformStarLoc);
 	}
-	
 
+	
+	
 	glutSwapBuffers();
 }
 
@@ -134,6 +140,9 @@ void Game::Init()
 	player = Player();
 	//star = Star();
 
+	startexture = loadTexture("OBJ/sun.jpg");
+	//startexture = loadTexture("OBJ/Stone.jpg");
+
 	for (int i{}; i < STAR_COUNT; i++)
 	{
 		star.emplace_back(Star());
@@ -143,6 +152,10 @@ void Game::Init()
 	{
 		meteor.emplace_back(Meteor());
 	}
+	
+	glActiveTexture(GL_TEXTURE0); // 텍스처 유닛 0 활성화
+	glBindTexture(GL_TEXTURE_2D, game.startexture);
+	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture1"), 0); // 유닛 0 연결
 
 	InitBuffer();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);

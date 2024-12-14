@@ -2,7 +2,7 @@
 #include "game.h"
 
 
-void Star::Draw(GLuint shaderProgramID, GLuint transformLoc) const
+void Star::Draw(GLuint shaderProgramID, GLuint transformLoc)
 {
 	glUniform1f(glGetUniformLocation(shaderProgramID, "emissionPower"), emissionPower);
 	glUniform3fv(glGetUniformLocation(shaderProgramID, "objectColor"), 1, glm::value_ptr(color));
@@ -15,6 +15,7 @@ void Star::Draw(GLuint shaderProgramID, GLuint transformLoc) const
 	
 
 	CreateModel(vaoStar, vboStar, eboStar, model);
+
 	glBindVertexArray(vaoStar);
 	glDrawElements(GL_TRIANGLES, model.faces.size() * 3, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);

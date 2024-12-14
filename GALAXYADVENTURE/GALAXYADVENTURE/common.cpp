@@ -28,8 +28,8 @@ void RandomPosition(glm::vec3& pos)
 	uniform_int_distribution<int> rangeSelector(0, 1);
 
 	// 각 구간의 범위 설정
-	uniform_real_distribution<float> negativeRange(-1000.f, -200.f);
-	uniform_real_distribution<float> positiveRange(200.f, 1000.f);
+	uniform_real_distribution<float> negativeRange(-40.f, -20.f);
+	uniform_real_distribution<float> positiveRange(20.f, 40.f);
 
 	// x, y, z 각각 랜덤 값 생성
 	pos.x = rangeSelector(gen) == 0 ? negativeRange(gen) : positiveRange(gen);

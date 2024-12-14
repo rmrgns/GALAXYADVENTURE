@@ -45,6 +45,12 @@
     <ClInclude Include="OBJRead.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -77,9 +83,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OBJRead.cpp">
       <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
