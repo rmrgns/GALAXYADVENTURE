@@ -89,7 +89,8 @@ void Player::DrawPlayer()
 	model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::scale(model, scaling);
-
+	glm::vec3 red(1.f, 0.f, 0.f);
+	glUniform3fv(glGetUniformLocation(game.getShaderProgramID(), "objectColor"), 1, glm::value_ptr(red));
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glDrawArrays(GL_TRIANGLES, 0, points);
 }

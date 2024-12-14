@@ -3,7 +3,7 @@
 #include "Shape.h"
 
 const float shipsize = 0.5f;
-const float shipspeed = 0.1f;
+const float shipspeed = 0.01f;
 
 enum Keyboard_type { KEY_DOWN, KEY_UP };
 
@@ -56,13 +56,13 @@ public:
 		shapecoord[index++] = glm::vec3(shipsize, -shipsize, shipsize);
 
 		for (int i = 0; i < 6; ++i)
-			shapecolor[i] = glm::vec3(0.0f, 1.0f, 0.0f);
+			shapecolor[i] = glm::vec3(1.0f, 0.0f, 0.0f);
 
 		for (int i = 6; i < 12; ++i)
-			shapecolor[i] = glm::vec3(0.0f, 1.0f, 1.0f);
+			shapecolor[i] = glm::vec3(1.0f, 0.0f, 0.0f);
 
 		for (int i = 12; i < index; ++i)
-			shapecolor[i] = glm::vec3(1.0f, 0.0f, 1.0f);
+			shapecolor[i] = glm::vec3(1.0f, 0.0f, 0.0f);
 
 		translation = glm::vec3(0.0);
 		rotation = glm::vec3(0.0);
