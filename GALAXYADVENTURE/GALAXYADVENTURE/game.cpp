@@ -150,6 +150,12 @@ void Game::Update(float time)
 
 	for (auto& s : star)
 	{
+		if (!game.player.crash)
+		{
+			if (CheckColide_BS(game.player.translation, s.GetPos(), game.player.radius, s.radius))
+				game.player.Explosion();
+		}
+
 		s.Update(time);
 	}
 

@@ -35,11 +35,14 @@ public:
 		Transform = glm::translate(Transform, pos);
 		Scale = glm::scale(Scale, size);
 		Matrix = Transform * Scale;
+		radius = size.x;
 	}
 
 	~Star() {
 
 	}
+
+	glm::vec3 GetPos() { return pos; }
 
 	void Draw(GLuint transformLoc);		// object Rendering
 	void Update(float time);			// object Update
