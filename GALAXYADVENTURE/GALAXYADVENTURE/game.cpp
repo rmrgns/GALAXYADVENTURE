@@ -155,6 +155,12 @@ void Game::Update(float time)
 
 	for (auto& m : meteor)
 	{
+		if (!game.player.crash)
+		{
+			if (CheckColide_BS(game.player.translation, m.GetPos(), game.player.radius, m.radius))
+				game.player.Explosion();
+		}
+
 		m.Update(time);
 	}
 
