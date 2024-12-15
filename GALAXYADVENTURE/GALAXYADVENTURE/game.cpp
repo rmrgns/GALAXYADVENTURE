@@ -169,6 +169,11 @@ void Game::Update(float time)
 	{
 		s.Update(time);
 	}
+
+	for (auto& m : meteor)
+	{
+		m.Update(time);
+	}
 }
 
 void Game::InitBuffer()
