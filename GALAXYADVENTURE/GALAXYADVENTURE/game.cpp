@@ -179,9 +179,9 @@ void Game::Update(float time)
 		game.prevmouseY = game.mouseY;
 	}
 	game.player.Move_by_Time();
-	cameraPos = game.player.translation + glm::vec3(5.0f * glm::sin(game.player.angle.y), 3.0f, 5.0f * glm::cos(game.player.angle.y));
+	cameraPos = game.player.translation + glm::vec3(5.0f * glm::sin(game.player.angle.y), 
+		3.0f, 5.0f * glm::cos(game.player.angle.y));
 	cameraDirection = game.player.translation;
-
 }
 
 void Game::cameraSet(GLuint ID)

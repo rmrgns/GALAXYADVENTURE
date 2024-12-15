@@ -21,21 +21,9 @@ private:
 
 	float m_time = 0.f;
 public:
-	Meteor()
-	{
-		model.loadFromFile(filename);
-		RandomColor(color);
-		RandomPosition(pos);
-		Transform = glm::translate(Transform, pos);
-		Scale = glm::scale(Scale, size);
-		Rotate = glm::rotate(Rotate, glm::radians(rotate.y), glm::vec3(0.f, 1.f, 0.f));
-		Matrix = Transform * Rotate * Scale;
-		radius = size.x;
-	}
-	~Meteor()
-	{
+	Meteor();
 
-	}
+	~Meteor() {}
 
 	glm::vec3 GetPos() { return pos; }
 

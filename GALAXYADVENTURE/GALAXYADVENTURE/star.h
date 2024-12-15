@@ -13,7 +13,6 @@ private:
 
 	glm::vec3 pos = glm::vec3(0.f,0.f,0.f);				// position
 	glm::vec3 size = glm::vec3(25.0f, 25.0f, 25.0f);	// size
-	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);		// color
 	glm::mat4 Matrix = glm::mat4(1.f);					// calculate matrix
 	glm::mat4 Transform = glm::mat4(1.f);				// transform matrix
 	glm::mat4 Scale = glm::mat4(1.f);					// scale matrix
@@ -23,29 +22,16 @@ private:
 	float lightCycle  = 0;
 
 	// texture
-	GLuint textureID; // 이 Star가 사용할 텍스처 ID
+	GLuint startextureID; // 이 Star가 사용할 텍스처 ID
 
 public:
-	Star(GLuint shaderProgram, GLuint textureID)
-		: shaderProgramID(shaderProgram), textureID(textureID) {
-		model.loadFromFile(filename);
-		RandomColor(color);
-		RandomPosition(pos);
-		size = RandomSize();
-		Transform = glm::translate(Transform, pos);
-		Scale = glm::scale(Scale, size);
-		Matrix = Transform * Scale;
-		radius = size.x;
-	}
-
-	~Star() {
-
-	}
-
-	glm::vec3 GetPos() { return pos; }
+	Star(GLuint shaderProgram, GLuint textureID);
+	~Star() {}
 
 	void Draw(GLuint transformLoc);		// object Rendering
 	void Update(float time);			// object Update
 
+	// Method
+	glm::vec3 GetPos() { return pos; }
 };
 

@@ -4,24 +4,22 @@
 #include "star.h"
 #include "meteor.h"
 
-#define STAR_COUNT 30
-#define METEOR_COUNT 60
-
+#define STAR_COUNT 100
+#define METEOR_COUNT 300
 
 static const int index = 1;
 
 static float bGCr = 0.0, bGCg = 0.0, bGCb = 0.0; // 배경색
-static GLuint vao, vbo[2], ebo, axesVAO, axesVBO; // 일반 vao
+static GLuint vao, vbo[2], ebo; // 일반 vao
 static GLuint vaoStar, vboStar[2], eboStar; // Star vao
-
+static GLuint vaoMeteor, vboMeteor[2], eboMeteor; // Meteor vao
 
 static glm::vec3 cameraPos = glm::vec3(0.0f, 3.0f, 5.0f); //카메라 위치
 static glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f); //카메라 바라보는 방향
 static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //카메라 위쪽 방향
 
-// temp light value
-static glm::vec3 lightPos(1.5f, 1.5f, 0.0f);  // 메인 조명 위치
-static glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+static glm::vec3 lightPos(1.5f, 1.5f, 0.0f);	// 메인 조명 위치
+static glm::vec3 lightColor(1.0f, 1.0f, 1.0f);	// 메인 조명 색
 
 class Game
 {
@@ -43,14 +41,16 @@ private:
 	glm::vec3 camRotate = glm::vec3(0.f, 0.f, 0.f);
 
 private:
-	//ortho
+	// projection
 	int projType = 0;
 	glm::mat4 projection = glm::mat4(1.0f);
 
-
+private:
+	// mouse control
 	int prevmouseX, prevmouseY;
 	int mouseX, mouseY;
 	bool holdmouse;
+
 public:
 	static GLvoid drawScene();
 	static GLvoid Keyboard(unsigned char key, int x, int y);
