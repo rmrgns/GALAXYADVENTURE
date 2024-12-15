@@ -51,6 +51,9 @@
     <ClInclude Include="texture.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="OBJRead2.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">

@@ -221,6 +221,8 @@ void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Model::Vertex), (void*)offsetof(Model::Vertex, texCoord));
 	glEnableVertexAttribArray(2);
 
+
+	
 	// EBO에 인덱스 데이터 업로드
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.faces.size() * sizeof(Model::Face), model.faces.data(), GL_STATIC_DRAW);
@@ -228,3 +230,31 @@ void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model)
 	glBindVertexArray(0); // VAO 언바인딩
 }
 
+void CreateModel2(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model2 model)
+{
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(2, VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+
+	// VBO에 정점 데이터 업로드
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, model.vertices.size() * sizeof(Model2::Vertex), model.vertices.data(), GL_STATIC_DRAW);
+
+	// Position attribute 설정
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Model2::Vertex), (void*)offsetof(Model2::Vertex, position));
+	glEnableVertexAttribArray(0);
+
+	// Normal attribute 설정
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Model2::Vertex), (void*)offsetof(Model2::Vertex, normal));
+	glEnableVertexAttribArray(1);
+
+
+
+	// EBO에 인덱스 데이터 업로드
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.faces.size() * sizeof(Model2::Face), model.faces.data(), GL_STATIC_DRAW);
+
+	glBindVertexArray(0); // VAO 언바인딩
+}

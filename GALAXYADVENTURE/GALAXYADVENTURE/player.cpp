@@ -114,7 +114,7 @@ void Player::DrawPlayer(GLuint shaderProgramID, GLuint transformLoc)
 	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	matrix = glm::scale(matrix, scaling);
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrix));
-	CreateModel(vao, vbo, ebo, model);
+	CreateModel2(vao, vbo, ebo, model);
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, model.faces.size() * 3, GL_UNSIGNED_INT, 0);
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "OBJRead.h"
+#include "OBJRead2.h"
 
 char* filetobuf(const char* file);
 void make_vertexShaders(GLuint& vertexShader, string shaderName);
@@ -11,3 +12,4 @@ void CreateRectBuffer(GLfloat vPositionList[], GLuint& VAO, GLuint& EBO, GLuint 
 
 void CreateIndexBuffer(GLuint& VAO, GLuint VBO[2], GLuint& EBO, GLfloat point[12], GLfloat colors[12], int shape, unsigned int index[]);
 void CreateModel(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model model);
+void CreateModel2(GLuint& VAO, GLuint VBO[2], GLuint& EBO, Model2 model);

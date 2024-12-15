@@ -3,15 +3,15 @@
 #include "Shape.h"
 
 const float shipsize = 0.5f;
-const float shipspeed = 0.01f;
+const float shipspeed = 1.f;
 
 enum Keyboard_type { KEY_DOWN, KEY_UP };
 
 class Player : public Shape
 {
 private:
-	Model model;
-	const char* filename = "OBJ/plane.obj";
+	Model2 model;
+	const char* filename = "OBJ/Plane.obj";
 public:
 	glm::vec3 speed;
 	glm::vec3 angle;

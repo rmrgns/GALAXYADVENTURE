@@ -1,5 +1,6 @@
 #include "game.h"
 #include "texture.h"
+
 Game game;
 
 GLvoid Game::drawScene()
@@ -16,10 +17,11 @@ GLvoid Game::drawScene()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	game.player.DrawPlayer(game.getShaderProgramID(), game.transformLoc);
-	
+	game.light(game.shaderProgramID);
+
 	glBindVertexArray(0);
 
-	game.light();
+	
 
 	// Star, Meteor Rendering
 	glUseProgram(game.getShaderProgramStar());
@@ -213,36 +215,6 @@ void Game::UpdateBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, MAX_POINTS * 3 * sizeof(GLfloat), glm::value_ptr(player.shapecolor[0]));
 
-}
-
-void Game::drawAxes()
-{
-	glm::vec3 axesVertices[] = {
-		   glm::vec3(-1000.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // x축 시작점 (빨간색)
-		   glm::vec3(1000.0f,  0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), // x축 끝점
-		   glm::vec3(0.0f, -1000.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), // y축 시작점 (녹색)
-		   glm::vec3(0.0f,  1000.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),  // y축 끝점
-		   glm::vec3(0.0f, 0.0f, -1000.0f), glm::vec3(0.0f, 0.0f, 1.0f), // z축 시작점 (파랑)
-		   glm::vec3(0.0f, 0.0f, 1000.0f), glm::vec3(0.0f, 0.0f, 1.0f),  // z축 끝점
-	};
-	glGenVertexArrays(1, &axesVAO);
-	glGenBuffers(1, &axesVBO);
-
-	glBindVertexArray(axesVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, axesVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(axesVertices), axesVertices, GL_STATIC_DRAW);
-
-	// 위치 속성
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// 색상 속성
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 }
 
 void Game::cameraSet(GLuint ID)
