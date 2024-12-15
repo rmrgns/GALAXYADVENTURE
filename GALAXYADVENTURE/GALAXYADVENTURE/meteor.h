@@ -31,19 +31,11 @@ public:
 		Rotate = glm::rotate(Rotate, glm::radians(rotate.y), glm::vec3(0.f, 1.f, 0.f));
 		Matrix = Transform * Rotate * Scale;
 	}
-
 	~Meteor()
 	{
 
 	}
 
 	void Draw(GLuint shaderProgramID, GLuint transformLoc) const;
-
 	void Update(float time);
-
-	// method
-	Model getModel() const { return model; }
-	void setPos(glm::vec3 pos) { pos = pos; }
-	glm::vec3 getPos() const { return pos; }
-
 };

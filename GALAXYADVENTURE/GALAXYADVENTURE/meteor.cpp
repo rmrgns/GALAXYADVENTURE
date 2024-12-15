@@ -3,11 +3,17 @@
 
 void Meteor::Draw(GLuint shaderProgramID, GLuint transformLoc) const
 {
+	// emission effect
 	glUniform1f(glGetUniformLocation(shaderProgramID, "emissionPower"), 0.5);
+
+	// matrix
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(Matrix));
+
+	// render
 	CreateModel(vaoStar, vboStar, eboStar, model);
 	glBindVertexArray(vaoStar);
 	glDrawElements(GL_TRIANGLES, model.faces.size() * 3, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
 }
 
 void Meteor::Update(float time)
