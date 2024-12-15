@@ -140,13 +140,11 @@ void Game::Init()
 		meteor.emplace_back(Meteor());
 	}
 
-	//InitBuffer();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
 }
 
 void Game::Update(float time)
 {
-	UpdateBuffer();
 
 	for (auto& s : star)
 	{
@@ -183,49 +181,6 @@ void Game::Update(float time)
 	game.player.Move_by_Time();
 	cameraPos = game.player.translation + glm::vec3(5.0f * glm::sin(game.player.angle.y), 3.0f, 5.0f * glm::cos(game.player.angle.y));
 	cameraDirection = game.player.translation;
-
-}
-
-void Game::InitBuffer()
-{
-	glGenVertexArrays(1, &vao); //--- VAO 를 지정하고 할당하기
-	glBindVertexArray(vao); //--- VAO를 바인드하기
-
-
-	glGenBuffers(2, vbo); //--- 2개의 VBO를 지정하고 할당하기
-	//--- 1번째 VBO를 활성화하여 바인드하고, 버텍스 속성 (좌표값)을 저장
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-
-	//--- 변수 diamond 에서 버텍스 데이터 값을 버퍼에 복사한다.
-	glBufferData(GL_ARRAY_BUFFER, index * MAX_POINTS * 3 * sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
-
-	//--- 좌표값을 attribute 인덱스 0번에 명시한다: 버텍스 당 3* float
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//--- attribute 인덱스 0번을 사용가능하게 함
-	glEnableVertexAttribArray(0);
-
-	//--- 2번째 VBO를 활성화 하여 바인드 하고, 버텍스 속성 (색상)을 저장
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-
-	//--- 변수 colors에서 버텍스 색상을 복사한다.
-	glBufferData(GL_ARRAY_BUFFER, index * MAX_POINTS * 3 * sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
-
-	//--- 색상값을 attribute 인덱스 1번에 명시한다: 버텍스 당 3*float
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//--- attribute 인덱스 1번을 사용 가능하게 함.
-	glEnableVertexAttribArray(1);
-
-}
-
-void Game::UpdateBuffer()
-{
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, MAX_POINTS * 3 * sizeof(GLfloat), glm::value_ptr(player.shapecoord[0]));
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, MAX_POINTS * 3 * sizeof(GLfloat), glm::value_ptr(player.shapecolor[0]));
 
 }
 

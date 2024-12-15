@@ -77,9 +77,6 @@ public:
 	void Init();
 	void Update(float time);
 
-	void InitBuffer();
-	void UpdateBuffer();
-
 	void cameraSet(GLuint ID);
 	void projectionSet(GLuint ID);
 
