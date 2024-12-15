@@ -79,7 +79,6 @@ public:
 
 	void InitBuffer();
 	void UpdateBuffer();
-	void drawAxes();
 
 	void cameraSet(GLuint ID);
 	void projectionSet(GLuint ID);

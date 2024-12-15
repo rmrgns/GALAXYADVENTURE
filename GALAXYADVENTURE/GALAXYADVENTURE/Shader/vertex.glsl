@@ -12,7 +12,6 @@ uniform mat4 projectionTransform;
 void main() {
     gl_Position = projectionTransform * viewTransform * modelTransform * vec4(vPos, 1.0);
     FragPos = vec3(modelTransform * vec4(vPos, 1.0));
-    Normal = mat3(transpose(inverse(modelTransform))) * vNormal; // 노말값
-
+    Normal = mat3(transpose(inverse(modelTransform))) * vNormal; // 모델 행렬 변환 반영
     //out_Color = in_Color;
 }

@@ -12,22 +12,14 @@ GLvoid Game::drawScene()
 	game.cameraSet(game.shaderProgramID);
 	game.projectionSet(game.shaderProgramID);
 	game.light(game.shaderProgramID);
-	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //���� ����
-	//glBindVertexArray(axesVAO);
 	glBindVertexArray(vao);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	//glm::mat4 axesTransform = glm::mat4(1.0f);
-	//
-	//glUniformMatrix4fv(game.transformLoc, 1, GL_FALSE, glm::value_ptr(axesTransform));
-	//glDrawArrays(GL_LINES, 0, 6);
-
-	game.player.DrawPlayer();
+	game.player.DrawPlayer(game.getShaderProgramID(), game.transformLoc);
 	
 	glBindVertexArray(0);
-	// Star Rendering
-	glm::mat4 StarMatrix(1.f);
-	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
+
+	game.light();
 
 	// Star, Meteor Rendering
 	glUseProgram(game.getShaderProgramStar());
@@ -100,17 +92,6 @@ GLvoid Game::timerFunction(int n)
 
 	float fixedDeltaTime = 1.0f / FPS; // 60FPS ����
 	game.Update(fixedDeltaTime);
-	//마우스를 누르고 움직이면 해당 방향으로 기체 회전
-	//비행기는 자동으로 -z 방향으로 이동
-	//입력받은 조작이 있으면 해당 방향으로 x, y 이동
-	//비행기 이동에 맞춰서 카메라 위치, 보는 방향 이동
-	if (game.holdmouse)
-	{
-		game.player.Tilt(game.mouseX - game.prevmouseX, game.mouseY - game.prevmouseY);
-	}
-	game.player.Move_by_Time();
-	cameraPos = game.player.translation + glm::vec3(5.0f * glm::sin(game.player.angle.y), 3.0f, 5.0f * glm::cos(game.player.angle.y));
-	cameraDirection = game.player.translation;
 
 	glutPostRedisplay();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
@@ -174,6 +155,21 @@ void Game::Update(float time)
 	{
 		m.Update(time);
 	}
+
+	//마우스를 누르고 움직이면 해당 방향으로 기체 회전
+	//비행기는 자동으로 -z 방향으로 이동
+	//입력받은 조작이 있으면 해당 방향으로 x, y 이동
+	//비행기 이동에 맞춰서 카메라 위치, 보는 방향 이동
+	if (game.holdmouse)
+	{
+		game.player.Tilt(game.mouseX - game.prevmouseX, game.mouseY - game.prevmouseY);
+		game.prevmouseX = game.mouseX;
+		game.prevmouseY = game.mouseY;
+	}
+	game.player.Move_by_Time();
+	cameraPos = game.player.translation + glm::vec3(5.0f * glm::sin(game.player.angle.y), 3.0f, 5.0f * glm::cos(game.player.angle.y));
+	cameraDirection = game.player.translation;
+
 }
 
 void Game::InitBuffer()
@@ -207,7 +203,6 @@ void Game::InitBuffer()
 	//--- attribute 인덱스 1번을 사용 가능하게 함.
 	glEnableVertexAttribArray(1);
 
-	drawAxes();
 }
 
 void Game::UpdateBuffer()
@@ -257,7 +252,7 @@ void Game::cameraSet(GLuint ID)
 	glm::mat4 cameraRotate(1.f);
 
 
-	view = glm::lookAt(cameraPos, cameraPos + cameraDirection, cameraUp);
+	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
 	cameraTranslate = glm::translate(cameraTranslate, camTranslate);
 	cameraRotate = glm::rotate(cameraRotate, glm::radians(camRotate.y), glm::vec3(0.f, 1.f, 0.f));
 	unsigned int viewLocation = glGetUniformLocation(ID, "viewTransform");

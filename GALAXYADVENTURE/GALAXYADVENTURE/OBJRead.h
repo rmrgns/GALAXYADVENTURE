@@ -14,7 +14,7 @@ public:
     };
 
     struct Face {
-        unsigned int v1, v2, v3; // ���� �ε���
+        unsigned int v1, v2, v3; // 정점 인덱스
     };
 
     std::vector<Model::Vertex> vertices;
@@ -92,12 +92,13 @@ public:
 
 
     void calculateNormals(std::vector<Model::Vertex>& vertices, const std::vector<Model::Face>& faces) {
-        // ��� ������ ������ �ʱ�ȭ
+        // 모든 정점의 법선을 초기화
+
         for (auto& vertex : vertices) {
             vertex.normal = glm::vec3(0.0f);
         }
 
-        // �� �ﰢ���� ������ ����ϰ� ������ �߰�
+        // 각 삼각형의 법선을 계산하고 정점에 추가
         for (const auto& face : faces) {
             glm::vec3 v0 = vertices[face.v1].position;
             glm::vec3 v1 = vertices[face.v2].position;
@@ -109,7 +110,7 @@ public:
             vertices[face.v3].normal += normal;
         }
 
-        // ��� ������ ����ȭ
+        // 모든 법선을 정규화
         for (auto& vertex : vertices) {
             vertex.normal = glm::normalize(vertex.normal);
         }

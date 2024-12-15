@@ -8,12 +8,21 @@ glm::vec3 Player::GetMoveValue()
 
 void Player::Move_by_Time()
 {
+	if (crash)
+	{
+		if (scaling.x < 2.0f)
+			scaling += glm::vec3(0.02f);
+		else
+			erase = true;
+		return;
+	}
+
 	translation += GetMoveValue();
 }
 
 void Player::Control(unsigned char key, Keyboard_type type)
 {
-	if (type == KEY_DOWN)
+	if (type == KEY_DOWN && !crash)
 	{
 		switch (key)
 		{
@@ -33,11 +42,20 @@ void Player::Control(unsigned char key, Keyboard_type type)
 			speed.x = shipspeed;
 			rotation.z = glm::radians(-45.0f + angle.y);
 			break;
+		case 'r':
+			speed.z = -shipspeed;
+			break;
+		case 'f':
+			speed.z = 0.0f;
+			break;
+		case 'x':
+			Explosion();
+			break;
 		default:
 			break;
 		}
 	}
-	else if (type == KEY_UP)
+	else if (type == KEY_UP && !crash)
 	{
 		switch (key)
 		{
@@ -65,33 +83,40 @@ void Player::Control(unsigned char key, Keyboard_type type)
 
 void Player::Tilt(int x, int y)
 {
-	const int tiltstandard = 100;
+	if (crash)
+		return;
 
-	if (x > tiltstandard)
-		angle.y -= glm::radians(1.0f);
-	else if (x < -tiltstandard)
-		angle.y += glm::radians(1.0f);
+	angle.y -= glm::radians(float(x) / 4.0f);
 
 	rotation.y = angle.y;
 }
 
-void Player::DrawPlayer()
+void Player::Explosion()
 {
-	extern Game game;
-	GLuint transformLoc = glGetUniformLocation(game.getShaderProgramID(), "modelTransform");
 
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, revolution.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::rotate(model, revolution.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, revolution.z, glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::translate(model, translation);
-	model = glm::rotate(model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::scale(model, scaling);
-	glm::vec3 red(1.f, 0.f, 0.f);
-	glUniform3fv(glGetUniformLocation(game.getShaderProgramID(), "objectColor"), 1, glm::value_ptr(red));
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
-	glDrawArrays(GL_TRIANGLES, 0, points);
+	crash = true;
+	filename = "OBJ/sphere.obj";
+	model.loadFromFile(filename);
+	shapecolor[0] = glm::vec3(1.0f, 0.0f, 0.0f);
+	scaling = glm::vec3(0.2f);
+}
+
+void Player::DrawPlayer(GLuint shaderProgramID, GLuint transformLoc)
+{
+	if (erase)
+		return;
+
+	glUniform3fv(glGetUniformLocation(shaderProgramID, "objectColor"), 1, glm::value_ptr(shapecolor[0]));
+	glm::mat4 matrix = glm::mat4(1.0f);
+	matrix = glm::translate(matrix, translation);
+	matrix = glm::rotate(matrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	matrix = glm::rotate(matrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	matrix = glm::scale(matrix, scaling);
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrix));
+	CreateModel(vao, vbo, ebo, model);
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, model.faces.size() * 3, GL_UNSIGNED_INT, 0);
+
 }
 
