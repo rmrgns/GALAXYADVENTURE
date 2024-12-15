@@ -25,17 +25,25 @@ void RandomColor(glm::vec3 &color)
 void RandomPosition(glm::vec3& pos)
 {
 	// -1000~-200 또는 200~1000 중 하나의 구간 선택
-	uniform_int_distribution<int> rangeSelector(0, 1);
+	uniform_int_distribution<int> rangeSelect(0, 1);
 
 	// 각 구간의 범위 설정
-	uniform_real_distribution<float> negativeRange(-40.f, -20.f);
-	uniform_real_distribution<float> positiveRange(20.f, 40.f);
+	uniform_real_distribution<float> negativeRange(-700.f, -100.f);
+	uniform_real_distribution<float> positiveRange(100.f, 700.f);
 
 	// x, y, z 각각 랜덤 값 생성
-	pos.x = rangeSelector(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
-	pos.y = rangeSelector(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
-	pos.z = rangeSelector(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
+	pos.x = rangeSelect(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
+	pos.y = rangeSelect(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
+	pos.z = rangeSelect(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
 
+}
+
+glm::vec3 RandomSize()
+{
+	uniform_real_distribution<float> random(20.f, 40.f);
+	float size = random(gen);
+	glm::vec3 output = glm::vec3(size, size, size);
+	return output;
 }
 
 int RandomTexture()

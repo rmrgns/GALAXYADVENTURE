@@ -59,6 +59,7 @@ bool CheckColide_BS(glm::vec3 sphere1, glm::vec3 sphere2, float radius1, float r
 void RandomColor(float& colorR, float& colorG, float& colorB);
 void RandomColor(glm::vec3 &color);
 void RandomPosition(glm::vec3 &pos);
+glm::vec3 RandomSize();
 int RandomTexture();
 
 #endif // CGCOMMON_H
