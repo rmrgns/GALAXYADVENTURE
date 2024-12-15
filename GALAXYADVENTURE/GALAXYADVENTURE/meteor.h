@@ -9,7 +9,7 @@ class Meteor : public Shape
 private:
 	Model model;
 	//const char* filename = "OBJ/RockSet.obj";
-	const char* filename = "OBJ/sphere1.obj";
+	const char* filename = "OBJ/meteor.obj";
 
 	glm::vec3 pos = glm::vec3(0.f, 1.1f, 0.f);			// position
 	glm::vec3 size = glm::vec3(1.0f, 1.0f, 1.0f);		// size
