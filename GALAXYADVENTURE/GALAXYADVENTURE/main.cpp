@@ -28,6 +28,9 @@ void main(int argc, char** argv)
 		std::cout << "GLEW Initialized\n";
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE); // 은면 제거 활성화
+	glCullFace(GL_BACK);    // 뒤쪽 면 제거
+	glFrontFace(GL_CCW);    // 반시계 방향을 앞면으로 설정
 
 	extern Game game;
 

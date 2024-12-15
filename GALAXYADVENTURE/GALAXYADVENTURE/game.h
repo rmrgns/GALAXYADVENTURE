@@ -31,10 +31,10 @@ private:
 	GLuint transformLoc = 0;
 	GLuint transformStarLoc = 0;
 	Player player; // player객체
-	vector<Star> star;	// star object 관리
+	vector<Star> star;	// star object
 	GLuint startexture[TEX_COUNT];	// star texture
-	vector<Meteor> meteor; // meteor object
-	GLuint meteortexture;
+	vector<Meteor> meteor;	// meteor object
+	GLuint meteortexture;	// meteor texture
 
 private:
 	// camera

@@ -28,8 +28,8 @@ void RandomPosition(glm::vec3& pos)
 	uniform_int_distribution<int> rangeSelect(0, 1);
 
 	// 각 구간의 범위 설정
-	uniform_real_distribution<float> negativeRange(-700.f, -100.f);
-	uniform_real_distribution<float> positiveRange(100.f, 700.f);
+	uniform_real_distribution<float> negativeRange(-500.f, -100.f);
+	uniform_real_distribution<float> positiveRange(100.f, 500.f);
 
 	// x, y, z 각각 랜덤 값 생성
 	pos.x = rangeSelect(gen) == 0 ? negativeRange(gen) : positiveRange(gen);
@@ -40,8 +40,8 @@ void RandomPosition(glm::vec3& pos)
 
 glm::vec3 RandomSize()
 {
-	uniform_real_distribution<float> random(20.f, 40.f);
-	float size = random(gen);
+	uniform_int_distribution<int> random(20, 40);
+	float size = float(random(gen));
 	glm::vec3 output = glm::vec3(size, size, size);
 	return output;
 }

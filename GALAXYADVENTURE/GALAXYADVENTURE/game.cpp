@@ -6,6 +6,7 @@ GLvoid Game::drawScene()
 {
 	glClearColor(bGCr, bGCg, bGCb, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glUseProgram(game.shaderProgramID);
 
 	game.cameraSet(game.shaderProgramID);
@@ -14,7 +15,7 @@ GLvoid Game::drawScene()
 	//projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -0.1f, 10.0f); //���� ����
 	//glBindVertexArray(axesVAO);
 	glBindVertexArray(vao);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	//glm::mat4 axesTransform = glm::mat4(1.0f);
 	//
@@ -28,12 +29,11 @@ GLvoid Game::drawScene()
 	glm::mat4 StarMatrix(1.f);
 	glm::vec3 objectColor(0.8f, 0.3f, 0.3f);
 
-
+	// Star, Meteor Rendering
 	glUseProgram(game.getShaderProgramStar());
 	game.cameraSet(game.shaderProgramStar);
 	game.projectionSet(game.shaderProgramStar);
 	game.light(game.shaderProgramStar);
-
 
 	for (auto& s : game.star)
 	{
@@ -44,8 +44,7 @@ GLvoid Game::drawScene()
 	glBindTexture(GL_TEXTURE_2D, game.meteortexture);
 	glUniform1i(glGetUniformLocation(game.shaderProgramStar, "texture1"), 0);
 	for (const auto& m : game.meteor)
-	{
-		
+	{	
 		m.Draw(game.shaderProgramStar, game.transformStarLoc);
 	}
 	
@@ -146,7 +145,6 @@ void Game::Init()
 	startexture[2] = loadTexture("OBJ/Mars.png");
 	startexture[3] = loadTexture("OBJ/Uranus.png");
 	meteortexture = loadTexture("OBJ/Rock6.jpg");
-	//startexture = loadTexture("OBJ/Stone.jpg");
 
 	for (int i{}; i < STAR_COUNT; i++)
 	{
@@ -159,13 +157,14 @@ void Game::Init()
 		meteor.emplace_back(Meteor());
 	}
 
-	InitBuffer();
+	//InitBuffer();
 	glutTimerFunc(1000 / FPS, timerFunction, 1);
 }
 
 void Game::Update(float time)
 {
 	UpdateBuffer();
+
 	for (auto& s : star)
 	{
 		s.Update(time);
